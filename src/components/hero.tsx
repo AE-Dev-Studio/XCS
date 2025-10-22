@@ -38,8 +38,8 @@ export default function HeroSection() {
                             className={`flex flex-col justify-center transition-all duration-1000 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-12 opacity-0"
                                 }`}
                         >
-                            <div className="max-w-5xl space-y-6">
-                                <h1 className="font-sans text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
+                            <div className="max-w-4xl space-y-6">
+                                <h1 className="font-sans text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-6xl">
                                     Premium Chauffeur Service in Manchester
                                 </h1>
                                 <p className="text-lg text-gray-200 leading-relaxed max-w-md">

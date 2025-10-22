@@ -148,7 +148,7 @@ export default function BookingForm() {
                     </div>
 
                     {/* Name */}
-                    <div className="flex flex-row gap-2">
+                    <div className="flex flex-row gap-2 w-full">
                         <div className="space-y-2">
                             {/* <Label htmlFor="name" className="text-sm font-medium text-gray-900">
               Name <span className="text-red-500">*</span>
@@ -196,7 +196,7 @@ export default function BookingForm() {
                     </div>
 
                     {/* Email */}
-                    <div className="flex flex-row gap-2">
+                    <div className="flex flex-row gap-2 ">
                         <div className="space-y-2">
                             {/* <Label htmlFor="email" className="text-sm font-medium text-gray-900">
               Email <span className="text-red-500">*</span>
@@ -220,7 +220,7 @@ export default function BookingForm() {
                         </div>
 
                         {/* Vehicle Select */}
-                        <div className="space-y-2">
+                        <div className="space-y-2 ">
                             {/* <Label htmlFor="vehicle" className="text-sm font-medium text-gray-900">
               Vehicle Requested <span className="text-red-500">*</span>
             </Label> */}
