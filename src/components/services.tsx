@@ -44,7 +44,7 @@ export function OurServicesSection() {
     <section className="w-full py-20 px-6 md:px-12 bg-black">
       {/* Header */}
       <div className="max-w-6xl mx-auto mb-16 text-center">
-        <h2 className="text-3xl md:text-5xl font-bold mb-4 text-balance text-white">Our Services</h2>
+        <h2 className="text-3xl md:text-5xl font-extrabold mb-4 text-balance text-white">Our <span className="text-green-600">Services</span> </h2>
         <div className="w-25 h-1 bg-white text-center mx-auto" />
       </div>
 
