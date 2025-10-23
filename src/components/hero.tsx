@@ -17,7 +17,7 @@ export default function HeroSection() {
   };
 
   return (
-    <div className="relative h-screen w-full overflow-hidden pt-10">
+    <div className="relative h-screen w-full overflow-hidden pt-20 lg:pt-10">
       {/* Background Image with Overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -59,10 +59,10 @@ export default function HeroSection() {
 
             <div
               ref={formRef}
-              className={`fixed bottom-0 right-5 flex transition-all duration-1000 delay-300 z-20 ${
+              className={` sm:fixed bottom-0 right-5 flex z-20 lg:items-center lg:justify-center transition-all duration-1000 delay-300 ${
                 isVisible
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-12 opacity-0"
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-12 opacity-0"
               }`}
             >
               <div className="w-full max-w-md">
