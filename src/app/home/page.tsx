@@ -1,5 +1,7 @@
 import AboutSection from "@/components/about"
+import AreasWeCover from "@/components/areaswecover"
 import CardLikeBanner from "@/components/cardlikebanner"
+import ContactNowSection from "@/components/contactnow"
 import ExperienceSection from "@/components/experiencesection"
 import HeroSection from "@/components/hero"
 import OurFleetSection from "@/components/ourfleet"
@@ -18,5 +20,7 @@ export default function Home() {
     <OurServicesSection />
     <WhyChooseUsSection />
     <ExperienceSection />
+    <AreasWeCover />
+    <ContactNowSection />
     </>)
 }

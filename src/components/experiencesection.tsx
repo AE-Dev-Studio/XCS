@@ -45,24 +45,27 @@ export default function ExperienceSection() {
                         <div className="max-w-3xl space-y-6">
                             {/* Heading with Gold Accent */}
                             <div className="space-y-3">
-                                <h2 className="font-sans text-4xl font-extrabold text-black">About Us</h2>
+                                <h2 className="font-sans text-4xl font-extrabold text-black">Experience the Pinnacle of Luxury
+                                </h2>
                             </div>
                             {/* Body Text */}
-                            <div className="space-y-2 font-sans text-black ">
+                            <div className="space-y-2 font-sans text-black flex flex-col gap-3 ">
                                 <p>
-                                    Welcome to Xclusive Chauffeurs, where luxury, professionalism, and security come together to offer an unparalleled chauffeur experience. Based in Manchester, we provide top-tier private car services, extending our reach to London. Our rigorously trained chauffeurs are available 24/7, ready to cater to your plans – whether for business, special events, or a relaxing ride..
+                                    At Xclusive Chauffeurs Services, we go above and beyond to provide top-tier chauffeur services in Manchester. From private airport transfers to corporate events and weddings, we offer customised transportation solutions tailored to your needs. Our modern fleet is equipped with the latest amenities for comfort and safety, and we only employ the most professional and proficient chauffeurs to guarantee a memorable experience.
                                 </p>
                                 <p>
-                                    With our VIP chauffeur services, you can truly revel in comfort and style. Our dedicated team of professional drivers and meticulously maintained fleet guarantees punctuality and sophistication every time. Plus, our chauffeurs are always near you to assist with any emergency requests.
+                                    We believe every client deserves a unique experience, which is why we personalise our chauffeur services to exceed your expectations. If you require a Mercedes chauffeur in Manchester or a luxury car hire for a special occasion, count on us. We are here to be your reliable partner every step of the way.
                                 </p>
+                                <h2 className="font-sans text-3xl font-bold text-black ">Travel with Convenience and Safety
+                                </h2>
                                 <p>
-                                    Experience the perfect blend of class and convenience with us. Get in touch with us to book your chauffeur service. We cannot wait to make your ride as luxurious as your destination.
+                                    Xclusive Chauffeurs houses extensively trained and skilled chauffeurs who are capable of maintaining privacy and discretion throughout the journey. When you ride with our specialists, your safety and convenience are their top priorities. They meticulously clean and sanitise our vehicles after every ride to guarantee a hygienic and delightful travel experience for all our valued clients.
                                 </p>
                             </div>
 
                             {/* Learn More Button */}
                             <div className="pt-4">
-                                <CustomButton text="Contact us" />
+                                <CustomButton text="Contact us" variant="black" />
                             </div>
                         </div>
                     </div>
