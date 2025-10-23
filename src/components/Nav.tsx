@@ -52,41 +52,28 @@ const Flag = () => (
   </svg>
 );
 
-function Nav() {
-  useEffect(() => {
-    const header = document.querySelector("header");
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        gsap.to(header, { backgroundColor: "rgba(0,0,0,0.95)", duration: 0.4 });
-      } else {
-        gsap.to(header, { backgroundColor: "rgba(0,0,0,0)", duration: 0.4 });
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-  return (
-    <header className="w-full bg-transparent fixed top-0 mb-10 z-50">
-      <div className="px-4 flex justify-between ">
-        <Link
-          href="tel:07497363737"
-          className="flex text-white hover:opacity-80 mt-4"
-        >
-          <Flag />
-          <span className="text-sm md:text-base">074 9736 3737</span>
-        </Link>
+const Nav = () => (
+  <header className="w-full bg-transparent absolute top-0 mb-10 z-50 ">
+    <div className="px-4 flex justify-between items-center">
+      {/* left phone */}
+      <Link
+        href="tel:07497363737"
+        className="flex text-white hover:opacity-80 mt-4"
+      >
+        <Flag />
+        <span className="text-sm md:text-base">074 9736 3737</span>
+      </Link>
 
-        <Link href="/">
-          <Image
-            src="/assets/logoWithoutbg.png"
-            alt="Logo"
-            width={120}
-            height={120}
-          />
-        </Link>
-        <div className="mt-4">
-          <CustomButton text="Book" />
-        </div>
+      <Link href="/">
+        <Image
+          src="/assets/logoWithoutbg.png"
+          alt="Logo"
+          width={120}
+          height={120}
+        />
+      </Link>
+      <div className="mt-4">
+        <CustomButton text="Book" variant="thin-green" />
       </div>
       {/* separator line */}
       <div className="border-b border-white/20" />
