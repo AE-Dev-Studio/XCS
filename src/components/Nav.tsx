@@ -1,7 +1,108 @@
+// components/Header.tsx
 import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import CustomButton from "./custombutton";
 
-const Nav = () => {
-  return <></>;
-};
+const Flag = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 480 480"
+    className="inline-block w-5 h-5 mr-2"
+  >
+    {" "}
+    <g>
+      <path
+        d="m480 240c0 132.51-107.39 239.94-239.89 240h-2.59a242.26 242.26 0 0 1 -34.74-2.87 236 236 0 0 1 -27.9-6.06 240.08 240.08 0 0 1 -174.88-231.07c0-132.53 107.42-240 240-240h.11a239.26 239.26 0 0 1 174.34 75.17 239.79 239.79 0 0 1 65.55 164.83z"
+        fill="#fff"
+      />
+      <path
+        d="m179.43 168.62v10.8h-34.89l-98-81.49a239 239 0 0 1 19.7-23.48z"
+        fill="#c8102e"
+      />
+      <path
+        d="m433.77 98.37-97.43 81h-35.77v-10.02l113.58-94.49.3.31a236.65 236.65 0 0 1 18.34 21.83z"
+        fill="#c8102e"
+      />
+      <path
+        d="m179.43 300.56v10.8l-113.19 94.19c-1-1-2-2.08-2.94-3.13a238.48 238.48 0 0 1 -16.75-20.35l98-81.51z"
+        fill="#c8102e"
+      />
+      <path
+        d="m433.78 381.62a240 240 0 0 1 -19.62 23.51l-113.59-94.5v-10.07h35.77z"
+        fill="#c8102e"
+      />
+      <g fill="#012169">
+        <path d="m95.85 179.42h-88.14a237.85 237.85 0 0 1 22-55.07z" />
+        <path d="m93.86 300.56-64.86 53.94a238 238 0 0 1 -21.29-53.94z" />
+        <path d="m179.43 351.28v121c-1.52-.39-3-.8-4.55-1.23a239.12 239.12 0 0 1 -86.09-44.68z" />
+        <path d="m179.43 7.71v119.1l-89.29-74.28a239.16 239.16 0 0 1 89.29-44.82z" />
+        <path d="m391.23 53.65-90.66 75.15v-121.08l1.37.35a239 239 0 0 1 89.29 45.58z" />
+        <path d="m472.29 179.42h-86l64.71-53.84a238.17 238.17 0 0 1 21.29 53.84z" />
+        <path d="m392 425.78a239.25 239.25 0 0 1 -91.38 46.51v-122.53z" />
+        <path d="m472.29 300.56a238.61 238.61 0 0 1 -20.65 52.71l-63.35-52.71z" />
+      </g>
+      <path
+        d="m480 237.49v4.79a242.25 242.25 0 0 1 -2.63 33.43h-201.66v201.65a242.45 242.45 0 0 1 -33.22 2.64h-5a240.78 240.78 0 0 1 -33.23-2.65v-201.64h-201.62a243 243 0 0 1 -2.64-33.26c0-1.57 0-3.15 0-4.73a242.4 242.4 0 0 1 2.63-33.44h201.66v-201.64a243.84 243.84 0 0 1 31.62-2.64h7.74a240.26 240.26 0 0 1 30.19 2.34l1.87.28v201.66h201.65a242.31 242.31 0 0 1 2.64 33.21z"
+        fill="#c8102e"
+      />
+    </g>
+  </svg>
+);
+
+const Nav = () => (
+  <header className="w-full bg-transparent absolute top-0 left-0 z-50 ">
+    <div className="px-4 flex ">
+      {/* left phone */}
+      <Link href="tel:07497363737" className="flex text-white hover:opacity-80">
+        <Flag />
+        <span className="text-sm md:text-base">074 9736 3737</span>
+      </Link>
+
+      <Link href="/">
+        <Image
+          src="/assets/logoWithoutbg.png"
+          alt="Logo"
+          width={120}
+          height={120}
+        />
+      </Link>
+      <CustomButton text="Book" />
+    </div>
+
+    {/* separator line */}
+    <div className="border-b border-white/20" />
+
+    {/* bottom nav row */}
+    <nav className="max-w-screen-6xl mx-auto px-4 ">
+      <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-white text-sm md:text-base">
+        <li>
+          <Link href="/">Home</Link>
+        </li>
+        <li>
+          <Link href="/about-us">About Us</Link>
+        </li>
+        <li>
+          <Link href="/services">Services</Link>
+        </li>
+        <li>
+          <Link href="/fleet">Fleet</Link>
+        </li>
+        <li>
+          <Link href="/gallery">Gallery</Link>
+        </li>
+        <li>
+          <Link href="/faqs">FAQ’S</Link>
+        </li>
+        <li>
+          <Link href="/blog">Blog</Link>
+        </li>
+        <li>
+          <Link href="/contact-us">Contact Us</Link>
+        </li>
+      </ul>
+    </nav>
+  </header>
+);
 
 export default Nav;
