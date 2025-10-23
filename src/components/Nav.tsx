@@ -52,6 +52,40 @@ const Flag = () => (
   </svg>
 );
 
+// const Nav = () => (
+//   <header className="w-full bg-transparent absolute top-0 mb-10 z-50 ">
+//     <div className="px-4 flex justify-between items-center">
+//       {/* left phone */}
+//       <Link
+//         href="tel:07497363737"
+//         className="flex text-white hover:opacity-80 mt-4"
+//       >
+//         <Flag />
+//         <span className="text-sm md:text-base">074 9736 3737</span>
+//       </Link>
+
+//       <Link href="/">
+//         <Image
+//           src="/assets/logoWithoutbg.png"
+//           alt="Logo"
+//           width={120}
+//           height={120}
+//         />
+//       </Link>
+//       <div className="mt-4">
+//         <CustomButton text="Book" variant="thin-green" />
+//       </div>
+//       {/* separator line */}
+//       <div className="border-b border-white/20" />
+    
+//       <Navbar />
+//     </header>
+//   );
+// }
+
+// export default Nav;
+
+
 const Nav = () => (
   <header className="w-full bg-transparent absolute top-0 mb-10 z-50 ">
     <div className="px-4 flex justify-between items-center">
@@ -72,15 +106,17 @@ const Nav = () => (
           height={120}
         />
       </Link>
+
       <div className="mt-4">
         <CustomButton text="Book" variant="thin-green" />
       </div>
-      {/* separator line */}
-      <div className="border-b border-white/20" />
+    </div>
 
-      <Navbar />
-    </header>
-  );
-}
+    {/* separator line */}
+    <div className="border-b border-white/20 mt-2" />
+
+    <Navbar />
+  </header>
+);
 
 export default Nav;
