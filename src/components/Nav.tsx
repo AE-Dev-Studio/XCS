@@ -1,9 +1,11 @@
-// components/Header.tsx
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CustomButton from "./custombutton";
 import Navbar from "./Navbar";
+import { useEffect } from "react";
+import gsap from "gsap";
 const Flag = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -73,67 +75,12 @@ const Nav = () => (
       <div className="mt-4">
         <CustomButton text="Book" variant="thin-green" />
       </div>
-    </div>
-    {/* separator line */}
-    <div className="border-b border-white/20" />
-    {/* <nav className="max-w-screen-6xl mx-auto px-4 ">
-      <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-white text-sm md:text-base">
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        <li>
-          <Link href="/about-us">About Us</Link>
-        </li>
-        <li>
-          <Link href="/services">Services</Link>
-        </li>
-        <li>
-          <Link href="/fleet">Fleet</Link>
-        </li>
-        <li>
-          <Link href="/gallery">Gallery</Link>
-        </li>
-        <li>
-          <Link href="/faqs">FAQ’S</Link>
-        </li>
-        <li>
-          <Link href="/blog">Blog</Link>
-        </li>
-        <li>
-          <Link href="/contact-us">Contact Us</Link>
-        </li>
-      </ul>
-    </nav>    
-    <nav className="max-w-screen-6xl mx-auto px-4 ">
-      <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-white text-sm md:text-base">
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        <li>
-          <Link href="/about-us">About Us</Link>
-        </li>
-        <li>
-          <Link href="/services">Services</Link>
-        </li>
-        <li>
-          <Link href="/fleet">Fleet</Link>
-        </li>
-        <li>
-          <Link href="/gallery">Gallery</Link>
-        </li>
-        <li>
-          <Link href="/faqs">FAQ’S</Link>
-        </li>
-        <li>
-          <Link href="/blog">Blog</Link>
-        </li>
-        <li>
-          <Link href="/contact-us">Contact Us</Link>
-        </li>
-      </ul>
-    </nav> */}
-    <Navbar />
-  </header>
-);
+      {/* separator line */}
+      <div className="border-b border-white/20" />
+
+      <Navbar />
+    </header>
+  );
+}
 
 export default Nav;
