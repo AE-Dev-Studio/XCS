@@ -21,7 +21,7 @@ import { Button } from "./ui/button";
 interface Props {
   text?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  variant?: "green" | "white" | "black"; // define your 3 variants
+  variant?: "green" | "white" | "black" | "thin-green"; // define your 3 variants
   className?: string;
 }
 
@@ -34,6 +34,7 @@ const CustomButton = ({ text, onClick, variant = "green", className }: Props) =>
         variant === "green" && "bg-green-600 text-white hover:bg-white hover:text-black",
         variant === "white" && "bg-white text-black hover:bg-green-600 hover:text-white",
         variant === "black" && "bg-black text-white hover:bg-green-600 hover:text-white",
+        variant === "thin-green" && "text-sm py-2 px-14 bg-green-600 text-white hover:bg-white hover:text-black",
         className
       )}
     >

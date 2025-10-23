@@ -23,7 +23,7 @@ export default function CardLikeBanner({ colorheading, plainheading, paragraph }
 
       {/* Centered Content */}
       <div
-        className={` relative z-10 h-full flex flex-row items-center justify-between text-center px-6 sm:px-10 transition-opacity duration-1000 ${isVisible ? "opacity-100" : "opacity-0"
+        className={` relative z-10 h-full flex flex-row items-center justify-around text-center px-6 sm:px-10 transition-opacity duration-1000 ${isVisible ? "opacity-100" : "opacity-0"
           }`}
       >
         <div className="flex flex-col justify-center mt-4 gap-3">
