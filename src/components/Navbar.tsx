@@ -94,7 +94,7 @@ export default function Navbar() {
   const isActive = (href: string) => router === href;
 
   return (
-    <nav className="max-w-screen-6xl mx-auto px-4">
+    <nav className="max-w-screen-6xl mx-auto px-4 py-2">
       <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-white text-sm md:text-base">
         {navLinks.map((link) =>
           link.children ? (

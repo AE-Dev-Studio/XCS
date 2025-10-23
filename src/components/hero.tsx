@@ -17,7 +17,7 @@ export default function HeroSection() {
   };
 
   return (
-    <div className="relative h-screen w-full overflow-hidden pt-20 lg:pt-10">
+    <div className="relative min-h-screen w-full overflow-hidden pt-20 lg:pt-10">
       {/* Background Image with Overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -41,7 +41,7 @@ export default function HeroSection() {
               }`}
             >
               <div className="max-w-5xl space-y-6">
-                <h1 className="font-sans text-3xl font-bold tracking-tight text-white sm:text-6xl lg:text-5xl">
+                <h1 className="font-sans text-3xl font-bold tracking-tight text-white sm:text-5xl lg:text-5xl">
                   Premium Chauffeur Service in Manchester
                 </h1>
                 <p className="text-lg text-gray-200 leading-relaxed max-w-lg">
@@ -57,10 +57,10 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div className="relative min-h-screen">
+            <div className="relative h-screen">
               <div
                 ref={formRef}
-                className={` sm:absolute bottom-40 right-5 flex z-20 lg:items-center lg:justify-center transition-all duration-1000 delay-300 ${
+                className={` sm:absolute bottom-40 lg:right-5 flex z-20 lg:items-center lg:justify-center transition-all duration-1000 delay-300 ${
                   isVisible
                     ? "translate-x-0 opacity-100"
                     : "translate-x-12 opacity-0"

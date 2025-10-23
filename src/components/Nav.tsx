@@ -1,9 +1,11 @@
-// components/Header.tsx
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CustomButton from "./custombutton";
 import Navbar from "./Navbar";
+import { useEffect } from "react";
+import gsap from "gsap";
 const Flag = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -50,90 +52,48 @@ const Flag = () => (
   </svg>
 );
 
-const Nav = () => (
-  <header className="w-full bg-transparent absolute top-0 mb-10 z-50 ">
-    <div className="px-4 flex justify-between ">
-      {/* left phone */}
-      <Link
-        href="tel:07497363737"
-        className="flex text-white hover:opacity-80 mt-4"
-      >
-        <Flag />
-        <span className="text-sm md:text-base">074 9736 3737</span>
-      </Link>
+function Nav() {
+  useEffect(() => {
+    const header = document.querySelector("header");
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        gsap.to(header, { backgroundColor: "rgba(0,0,0,0.95)", duration: 0.4 });
+      } else {
+        gsap.to(header, { backgroundColor: "rgba(0,0,0,0)", duration: 0.4 });
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  return (
+    <header className="w-full bg-transparent fixed top-0 mb-10 z-50">
+      <div className="px-4 flex justify-between ">
+        <Link
+          href="tel:07497363737"
+          className="flex text-white hover:opacity-80 mt-4"
+        >
+          <Flag />
+          <span className="text-sm md:text-base">074 9736 3737</span>
+        </Link>
 
-      <Link href="/">
-        <Image
-          src="/assets/logoWithoutbg.png"
-          alt="Logo"
-          width={120}
-          height={120}
-        />
-      </Link>
-      <div className="mt-4">
-        <CustomButton text="Book" />
+        <Link href="/">
+          <Image
+            src="/assets/logoWithoutbg.png"
+            alt="Logo"
+            width={120}
+            height={120}
+          />
+        </Link>
+        <div className="mt-4">
+          <CustomButton text="Book" />
+        </div>
       </div>
-    </div>
-    {/* separator line */}
-    <div className="border-b border-white/20" />
-    {/* <nav className="max-w-screen-6xl mx-auto px-4 ">
-      <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-white text-sm md:text-base">
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        <li>
-          <Link href="/about-us">About Us</Link>
-        </li>
-        <li>
-          <Link href="/services">Services</Link>
-        </li>
-        <li>
-          <Link href="/fleet">Fleet</Link>
-        </li>
-        <li>
-          <Link href="/gallery">Gallery</Link>
-        </li>
-        <li>
-          <Link href="/faqs">FAQ’S</Link>
-        </li>
-        <li>
-          <Link href="/blog">Blog</Link>
-        </li>
-        <li>
-          <Link href="/contact-us">Contact Us</Link>
-        </li>
-      </ul>
-    </nav>    
-    <nav className="max-w-screen-6xl mx-auto px-4 ">
-      <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-white text-sm md:text-base">
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        <li>
-          <Link href="/about-us">About Us</Link>
-        </li>
-        <li>
-          <Link href="/services">Services</Link>
-        </li>
-        <li>
-          <Link href="/fleet">Fleet</Link>
-        </li>
-        <li>
-          <Link href="/gallery">Gallery</Link>
-        </li>
-        <li>
-          <Link href="/faqs">FAQ’S</Link>
-        </li>
-        <li>
-          <Link href="/blog">Blog</Link>
-        </li>
-        <li>
-          <Link href="/contact-us">Contact Us</Link>
-        </li>
-      </ul>
-    </nav> */}
-    <Navbar />
-  </header>
-);
+      {/* separator line */}
+      <div className="border-b border-white/20" />
+
+      <Navbar />
+    </header>
+  );
+}
 
 export default Nav;
