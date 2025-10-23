@@ -133,7 +133,7 @@ export default function BookingForm() {
   };
 
   return (
-    <div className="rounded-t-lg bg-white backdrop-blur-sm p-4 shadow-2xl">
+    <div className="rounded-sm bg-white backdrop-blur-sm pb-7 px-8  shadow-2xl">
       {submitted ? (
         <div className="space-y-4 text-center py-8">
           <div className="text-4xl">✓</div>
@@ -145,7 +145,7 @@ export default function BookingForm() {
           </p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-3">
           <div className="flex flex-row gap-2">
             <Image
               src="/assets/logo.jpg"
@@ -161,7 +161,7 @@ export default function BookingForm() {
 
           {/* Name */}
           <div className="flex flex-row gap-2">
-            <div className="space-y-2">
+            <div className="space-y-1">
               {/* <Label htmlFor="name" className="text-sm font-medium text-gray-900">
               Name <span className="text-red-500">*</span>
             </Label> */}
@@ -215,7 +215,7 @@ export default function BookingForm() {
 
           {/* Email */}
           <div className="flex flex-row gap-2">
-            <div className="space-y-2">
+            <div className="">
               {/* <Label htmlFor="email" className="text-sm font-medium text-gray-900">
               Email <span className="text-red-500">*</span>
             </Label> */}
@@ -242,7 +242,7 @@ export default function BookingForm() {
             </div>
 
             {/* Vehicle Select */}
-            <div className="space-y-2">
+            <div className="">
               {/* <Label htmlFor="vehicle" className="text-sm font-medium text-gray-900">
               Vehicle Requested <span className="text-red-500">*</span>
             </Label> */}
@@ -380,7 +380,7 @@ export default function BookingForm() {
           {/* Submit Button */}
           <Button
             type="submit"
-            className="w-full bg-[#a89447] text-white hover:none hover:bg-[#a89447] rounded-none font-semibold py-6 text-base transition-colors duration-200"
+            className="w-full pb-4 bg-[#a89447] text-white hover:none hover:bg-[#a89447] rounded-none font-semibold py-6 text-base transition-colors duration-200"
           >
             Send
           </Button>
