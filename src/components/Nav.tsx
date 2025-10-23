@@ -52,7 +52,7 @@ const Flag = () => (
 
 const Nav = () => (
   <header className="w-full bg-transparent absolute top-0 mb-10 z-50 ">
-    <div className="px-4 flex justify-between ">
+    <div className="px-4 flex justify-between items-center">
       {/* left phone */}
       <Link
         href="tel:07497363737"
@@ -71,7 +71,7 @@ const Nav = () => (
         />
       </Link>
       <div className="mt-4">
-        <CustomButton text="Book" />
+        <CustomButton text="Book" variant="thin-green" />
       </div>
     </div>
     {/* separator line */}
