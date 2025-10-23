@@ -57,16 +57,18 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div
-              ref={formRef}
-              className={` sm:fixed bottom-0 right-5 flex z-20 lg:items-center lg:justify-center transition-all duration-1000 delay-300 ${
-                isVisible
-                  ? "translate-x-0 opacity-100"
-                  : "translate-x-12 opacity-0"
-              }`}
-            >
-              <div className="w-full max-w-md">
-                <BookingForm />
+            <div className="relative min-h-screen">
+              <div
+                ref={formRef}
+                className={` sm:absolute bottom-40 right-5 flex z-20 lg:items-center lg:justify-center transition-all duration-1000 delay-300 ${
+                  isVisible
+                    ? "translate-x-0 opacity-100"
+                    : "translate-x-12 opacity-0"
+                }`}
+              >
+                <div className="w-full max-w-md">
+                  <BookingForm />
+                </div>
               </div>
             </div>
           </div>

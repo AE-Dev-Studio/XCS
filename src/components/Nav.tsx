@@ -51,7 +51,7 @@ const Flag = () => (
 );
 
 const Nav = () => (
-  <header className="w-full bg-transparent absolute top-0 z-50 ">
+  <header className="w-full bg-transparent absolute top-0 mb-10 z-50 ">
     <div className="px-4 flex justify-between ">
       {/* left phone */}
       <Link
