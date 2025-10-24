@@ -67,7 +67,7 @@ function Nav() {
   }, []);
   return (
     <header className="w-full bg-transparent fixed top-0 mb-10 z-50">
-      <div className="px-4 flex justify-between ">
+      <div className="px-12 flex justify-between items-center">
         <Link
           href="tel:07497363737"
           className="flex text-white hover:opacity-80 mt-4"
