@@ -46,7 +46,7 @@ export default function AreasWeCover() {
       <div className="max-w-7xl mx-auto px-6 text-center">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-extrabold mb-3 text-white">
-          Areas <span className="text-green-600">We Cover</span>
+          Areas <span className="text-[#a89447]">We Cover</span>
         </h2>
         <div className="w-25 h-0.5 bg-white mx-auto mt-5 m-10" />
 

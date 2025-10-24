@@ -70,7 +70,7 @@ export const XclusiveSlider: React.FC = () => {
   const [scrollL, setScrollL] = useState(0);
 
   const clones = 6;
-  const cardW = 344; // w-80 (320px) + gap-6 (24px)
+  const cardW = 344;
 
   /*  silent scroll helper  */
   const silent = (el: HTMLDivElement, left: number) => {
@@ -81,7 +81,7 @@ export const XclusiveSlider: React.FC = () => {
     });
   };
 
-  /*  infinite loop - fixed to prevent visible jump  */
+  /*  infinite loop  */
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
@@ -90,19 +90,15 @@ export const XclusiveSlider: React.FC = () => {
       const singleSetWidth = cardW * FLEET.length;
       const scrollLeft = el.scrollLeft;
 
-      // Jump forward if we've scrolled past the first set
       if (scrollLeft < cardW) {
         silent(el, scrollLeft + singleSetWidth);
         return;
       }
-
-      // Jump backward if we've scrolled past the second set
       if (scrollLeft > singleSetWidth * 2 - cardW) {
         silent(el, scrollLeft - singleSetWidth);
         return;
       }
 
-      // Update active index based on center position
       const centre = scrollLeft + el.clientWidth / 2;
       const rawIndex = Math.round(centre / cardW);
       const i = ((rawIndex % FLEET.length) + FLEET.length) % FLEET.length;
@@ -111,16 +107,16 @@ export const XclusiveSlider: React.FC = () => {
 
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => el.removeEventListener("scroll", onScroll);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  /*  initial position - start at middle set  */
+  /*  initial position  */
   useEffect(() => {
     if (trackRef.current) {
       trackRef.current.scrollLeft = cardW * FLEET.length;
     }
   }, []);
 
-  /*  drag handlers  */
+  /*  drag handlers – stable references  */
   const down = (e: React.MouseEvent | React.TouchEvent) => {
     if (!trackRef.current) return;
     e.preventDefault();
@@ -149,30 +145,26 @@ export const XclusiveSlider: React.FC = () => {
     el.scrollTo({ left: target, behavior: "smooth" });
   };
 
+  /*  drag-side-effect  */
   useEffect(() => {
     if (!dragging) return;
 
-    const handleMove = (e: MouseEvent | TouchEvent) => move(e);
-    const handleUp = () => up();
-
-    document.addEventListener("mousemove", handleMove);
-    document.addEventListener("mouseup", handleUp);
-    document.addEventListener("touchmove", handleMove);
-    document.addEventListener("touchend", handleUp);
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+    document.addEventListener("touchmove", move);
+    document.addEventListener("touchend", up);
 
     return () => {
-      document.removeEventListener("mousemove", handleMove);
-      document.removeEventListener("mouseup", handleUp);
-      document.removeEventListener("touchmove", handleMove);
-      document.removeEventListener("touchend", handleUp);
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", up);
+      document.removeEventListener("touchmove", move);
+      document.removeEventListener("touchend", up);
     };
-  }, [dragging, startX, scrollL]);
-
+  }, [dragging]);
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
     const wheel = (e: WheelEvent) => {
-      // Only prevent if scrolling horizontally (shift + wheel or trackpad horizontal gesture)
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         e.preventDefault();
       }
@@ -181,7 +173,6 @@ export const XclusiveSlider: React.FC = () => {
     return () => el.removeEventListener("wheel", wheel);
   }, []);
 
-  /*  arrow navigation  */
   const scroll = (direction: "left" | "right") => {
     if (!trackRef.current) return;
     const el = trackRef.current;
