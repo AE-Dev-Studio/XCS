@@ -9,6 +9,7 @@ import SingleImageSection from "@/components/singleimagesection";
 import WhyChooseUsSection from "@/components/whychooseussection";
 import Fleet from "@/components/fleet/fleet";
 import Footer from "@/components/footer/footer";
+import Faq from "@/components/faqs/faqs";
 export default function Home() {
   return (
     <>
@@ -30,6 +31,7 @@ export default function Home() {
       <WhyChooseUsSection />
       <ExperienceSection />
       <AreasWeCover />
+      <Faq />
       <ContactNowSection />
       <Footer />
     </>
