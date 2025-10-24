@@ -240,7 +240,7 @@ export const XclusiveSlider: React.FC = () => {
 
 /* ---------- card ---------- */
 const CarCard: React.FC<{ car: Car }> = ({ car }) => (
-  <article className="w-[306px] shrink-0 snap-center bg-white rounded-2xl shadow-xl overflow-hidden">
+  <article className="w-[306px] shrink-0 snap-center bg-white rounded-none shadow-xl overflow-hidden">
     <Image
       src={car.img}
       alt={car.title}
