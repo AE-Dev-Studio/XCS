@@ -18,9 +18,10 @@ export default function Home() {
       <AboutSection />
       <CardLikeBanner
         colorheading="Ride "
-        plainheading="in Style"
+        plainheading=" In Style"
         paragraph="Place your trust in us for VIP chauffeur hire and enjoy an unforgettable journey."
       />
+      <div className="h-[3vh] w-full bg-white"/>
       <Fleet />
       <CardLikeBanner
         colorheading="Schedule "
