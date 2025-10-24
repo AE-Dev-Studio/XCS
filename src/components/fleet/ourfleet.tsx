@@ -243,14 +243,6 @@ export const XclusiveSlider: React.FC = () => {
           ))}
         </div>
       </div>
-
-      {/* ----------  MOBILE / TABLET : banner stacked under slider ---------- */}
-      <div className="lg:hidden mt-10 max-w-sm mx-auto px-4">
-        {/* same banner content you already have */}
-        <aside className="bg-white/90 backdrop-blur rounded-2xl p-6 shadow-2xl">
-          {/* logo, bullets, side-banner, CTA … */}
-        </aside>
-      </div>
     </section>
   );
 };
