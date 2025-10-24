@@ -1,6 +1,5 @@
 // import { Button } from "./ui/button";
 
-
 // interface Props{
 //     text?: string;
 //     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -8,7 +7,7 @@
 
 // const CustomButton = ({text, onClick}: Props) => {
 //   return (
-//     <Button 
+//     <Button
 //     className="border-2  bg-[#a89447] rounded-full text-white font-sans hover:bg-black px-8 py-6 text-lg font-semibold transition-all duration-300"
 //     onClick={onClick}>{text}</Button>
 //   )
@@ -25,16 +24,25 @@ interface Props {
   className?: string;
 }
 
-const CustomButton = ({ text, onClick, variant = "green", className }: Props) => {
+const CustomButton = ({
+  text,
+  onClick,
+  variant = "green",
+  className,
+}: Props) => {
   return (
     <Button
       onClick={onClick}
       className={cn(
         "border-2 rounded-full font-sans px-8 py-6 text-lg font-semibold transition-all duration-300",
-        variant === "green" && "bg-green-600 text-white hover:bg-white hover:text-black",
-        variant === "white" && "bg-white text-black hover:bg-green-600 hover:text-white",
-        variant === "black" && "bg-black text-white hover:bg-green-600 hover:text-white",
-        variant === "thin-green" && "text-sm py-2 px-14 bg-green-600 text-white hover:bg-white hover:text-black",
+        variant === "green" &&
+          "bg-[#a89447] text-white hover:bg-white hover:text-black",
+        variant === "white" &&
+          "bg-white text-black hover:bg-[#a89447] hover:text-white",
+        variant === "black" &&
+          "bg-black text-white hover:bg-green-600 hover:text-white",
+        variant === "thin-green" &&
+          "text-sm py-2 px-14 bg-green-600 text-white hover:bg-white hover:text-black",
         className
       )}
     >
