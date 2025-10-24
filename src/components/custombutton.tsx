@@ -40,9 +40,9 @@ const CustomButton = ({
         variant === "white" &&
           "bg-white text-black hover:bg-[#a89447] hover:text-white",
         variant === "black" &&
-          "bg-black text-white hover:bg-green-600 hover:text-white",
+          "bg-black text-white hover:bg-[#a89447] hover:text-white",
         variant === "thin-green" &&
-          "text-sm py-2 px-14 bg-green-600 text-white hover:bg-white hover:text-black",
+          "text-sm py-2 px-14 bg-[#a89447] text-white hover:bg-white hover:text-black",
         className
       )}
     >

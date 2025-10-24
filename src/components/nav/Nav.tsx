@@ -85,7 +85,7 @@ function Nav() {
           />
         </Link>
         <div className="mt-4">
-          <CustomButton text="Book" />
+          <CustomButton text="Book" variant="thin-green"/>
         </div>
       </div>
       {/* separator line */}
