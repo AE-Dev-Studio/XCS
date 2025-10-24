@@ -1,30 +1,32 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import CustomButton from "./custombutton"
+import { useEffect, useState } from "react";
+import CustomButton from "./custombutton";
 
 interface Props {
-  colorheading: string
-  plainheading: string
-  paragraph: string
+  colorheading: string;
+  plainheading: string;
+  paragraph: string;
 }
 
-export default function CardLikeBanner({ colorheading, plainheading, paragraph }: Props) {
-  const [isVisible, setIsVisible] = useState(false)
+export default function CardLikeBanner({
+  colorheading,
+  plainheading,
+  paragraph,
+}: Props) {
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true)
-  }, [])
+    setIsVisible(true);
+  }, []);
 
   return (
-    <div
-      className="relative w-full h-[20vh] bg-cover bg-center bg-no-repeat overflow-hidden bg-black"
-    >
-
+    <div className="relative w-full bg-cover bg-center bg-no-repeat overflow-hidden bg-black">
       {/* Centered Content */}
       <div
-        className={` relative z-10 h-full flex flex-row items-center justify-around text-center px-6 sm:px-10 transition-opacity duration-1000 ${isVisible ? "opacity-100" : "opacity-0"
-          }`}
+        className={` relative z-10 h-full flex flex-row items-center justify-around text-center px-6 sm:px-10 transition-opacity duration-1000 ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}
       >
         <div className="flex flex-col justify-center mt-4 gap-3">
           <div className="flex flex-row">
@@ -44,8 +46,6 @@ export default function CardLikeBanner({ colorheading, plainheading, paragraph }
           <CustomButton variant="white" text="Contact Us" />
         </div>
       </div>
-
-
     </div>
-  )
+  );
 }

@@ -7,7 +7,7 @@ import HeroSection from "@/components/hero";
 import { OurServicesSection } from "@/components/services";
 import SingleImageSection from "@/components/singleimagesection";
 import WhyChooseUsSection from "@/components/whychooseussection";
-import { XclusiveSlider } from "@/components/ourfleet";
+import Fleet from "@/components/fleet/fleet";
 export default function Home() {
   return (
     <>
@@ -18,9 +18,7 @@ export default function Home() {
         plainheading="in Style"
         paragraph="Place your trust in us for VIP chauffeur hire and enjoy an unforgettable journey."
       />
-      <main className="min-h-screen bg-neutral-900 flex items-center">
-        <XclusiveSlider />
-      </main>{" "}
+      <Fleet />
       <CardLikeBanner
         colorheading="Schedule "
         plainheading=" Your Chauffeur Today!"

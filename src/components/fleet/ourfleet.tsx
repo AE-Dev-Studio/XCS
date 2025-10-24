@@ -69,7 +69,7 @@ export const XclusiveSlider: React.FC = () => {
   const [startX, setStartX] = useState(0);
   const [scrollL, setScrollL] = useState(0);
 
-  const clones = 5;
+  const clones = 6;
   const cardW = 344; // w-80 (320px) + gap-6 (24px)
 
   /*  silent scroll helper  */
@@ -190,32 +190,37 @@ export const XclusiveSlider: React.FC = () => {
   };
 
   return (
-    <section className="w-full select-none">
-      <div className="relative">
+    <section className="w-full select-none bg-black py-20">
+      {/* ----------  DESKTOP : keep your original layout ---------- */}
+      <div className="relative max-w-7xl mx-auto max-lg:px-4 lg:pr-80">
+        {/* arrows */}
         <button
           onClick={() => scroll("left")}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-black rounded-full p-3 shadow-lg transition-all hover:scale-110"
-          aria-label="Previous car"
+          className="absolute left-0 mx-3 top-1/2 -translate-y-1/2 z-10
+                       bg-white/90 hover:bg-white text-black rounded-full p-3
+                       shadow-lg transition hover:scale-110"
+          aria-label="Previous"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
-
-        {/* Right Arrow */}
         <button
           onClick={() => scroll("right")}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-black rounded-full p-3 shadow-lg transition-all hover:scale-110"
-          aria-label="Next car"
+          className="absolute right-0 lg:right-1/4 mx-3 top-1/2 -translate-y-1/2 z-10
+                       bg-white/90 hover:bg-white text-black rounded-full p-3
+                       shadow-lg transition hover:scale-110"
+          aria-label="Next"
         >
           <ChevronRight className="w-6 h-6" />
         </button>
+
+        {/* track */}
         <div
           ref={trackRef}
           onMouseDown={down}
           onTouchStart={down}
-          className={
-            "flex gap-6 overflow-x-auto scroll-smooth pb-10 cursor-grab " +
-            (dragging ? "cursor-grabbing" : "cursor-grab")
-          }
+          className={`flex gap-6 overflow-x-auto scroll-smooth cursor-grab ${
+            dragging ? "cursor-grabbing" : ""
+          }`}
           style={{ scrollbarWidth: "none" }}
         >
           <style>{`.xclusive-slider::-webkit-scrollbar{display:none}`}</style>
@@ -225,53 +230,61 @@ export const XclusiveSlider: React.FC = () => {
             )}
           </div>
         </div>
+
+        {/* dots */}
+        <div className="flex justify-center gap-2 mt-6">
+          {FLEET.map((_, i) => (
+            <span
+              key={i}
+              className={`w-2 h-2 rounded-full transition ${
+                i === index ? "bg-white" : "bg-white/40"
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
-      <div className="flex justify-center gap-2 mt-2">
-        {FLEET.map((_, i) => (
-          <span
-            key={i}
-            className={
-              "w-2 h-2 rounded-full transition " +
-              (i === index ? "bg-white" : "bg-white/30")
-            }
-          />
-        ))}
+      {/* ----------  MOBILE / TABLET : banner stacked under slider ---------- */}
+      <div className="lg:hidden mt-10 max-w-sm mx-auto px-4">
+        {/* same banner content you already have */}
+        <aside className="bg-white/90 backdrop-blur rounded-2xl p-6 shadow-2xl">
+          {/* logo, bullets, side-banner, CTA … */}
+        </aside>
       </div>
     </section>
   );
 };
 
+/* ---------- card ---------- */
 const CarCard: React.FC<{ car: Car }> = ({ car }) => (
-  <article className="w-90 shrink-0 snap-center bg-white rounded-2xl shadow-xl overflow-hidden">
-    {/* Hero image */}
+  <article className="w-[306px] shrink-0 snap-center bg-white rounded-2xl shadow-xl overflow-hidden">
     <Image
       src={car.img}
       alt={car.title}
-      width={320}
-      height={208}
-      className="h-52 w-full object-contain"
+      width={306}
+      height={220}
+      className="h-[220px] w-full object-contain bg-white"
     />
-
-    <div className="p-6 text-neutral-900">
-      <h3 className="text-xl font-bold tracking-wide">{car.title}</h3>
+    <div className="p-5">
+      <h4 className="text-lg font-bold text-neutral-900">{car.title}</h4>
       <p className="text-sm text-neutral-500 mb-4">{car.tagline}</p>
 
-      <div className="space-y-3 text-sm">
-        <div className="flex justify-between items-center">
+      <ul className="space-y-3 text-sm">
+        <li className="flex items-center justify-between">
           <span>Hourly rate (minimum 6 hours)</span>
-          <strong className="text-lg">£{car.hourly}</strong>
-        </div>
-        <div className="flex justify-between items-center">
+          <b className="text-lg">£{car.hourly}</b>
+        </li>
+        <li className="flex items-center justify-between">
           <span>Day rate (minimum 8 hours)</span>
-          <strong className="text-lg">£{car.daily}</strong>
-        </div>
-      </div>
+          <b className="text-lg">£{car.daily}</b>
+        </li>
+      </ul>
 
       <p className="text-xs text-neutral-400 mt-3">Prices subject to VAT</p>
 
-      <button className="w-full mt-4 bg-black text-white py-3 rounded-lg font-semibold hover:bg-neutral-800 transition">
+      <button className="w-full mt-4 bg-black text-white py-3 rounded-lg font-semibold hover:bg-neutral-800 transition flex items-center justify-center gap-2">
         BOOK THIS CAR
+        <span className="text-xl">→</span>
       </button>
     </div>
   </article>

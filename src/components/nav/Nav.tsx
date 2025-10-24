@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import CustomButton from "./custombutton";
+import CustomButton from "../custombutton";
 import Navbar from "./Navbar";
 import { useEffect } from "react";
 import gsap from "gsap";

@@ -2,7 +2,7 @@
 // components/Navbar.tsx
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Dropdown from "./dropdownNav";
+import Dropdown from "../dropdownNav";
 
 const SERVICES: { label: string; href: string }[] = [
   {
