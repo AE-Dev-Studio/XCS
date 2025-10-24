@@ -148,7 +148,7 @@ export default function BookingForm() {
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="flex flex-row gap-2">
             <Image
-              src="/assets/logo.jpg"
+              src="/assets/logo.jpeg"
               alt="App Logo"
               className="w-20 h-20 text-center"
               height={80}
