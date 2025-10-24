@@ -70,7 +70,7 @@ function Nav() {
       <div className="px-12 flex justify-between items-center">
         <Link
           href="tel:07497363737"
-          className="flex text-white hover:opacity-80 mt-4"
+          className="hidden md:flex text-white hover:opacity-80 mt-4"
         >
           <Flag />
           <span className="text-sm md:text-base">074 9736 3737</span>
@@ -85,7 +85,7 @@ function Nav() {
           />
         </Link>
         <div className="mt-4">
-          <CustomButton text="Book" variant="thin-green"/>
+          <CustomButton text="Book" variant="thin-green" />
         </div>
       </div>
       {/* separator line */}
