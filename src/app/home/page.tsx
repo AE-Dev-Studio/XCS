@@ -4,12 +4,13 @@ import CardLikeBanner from "@/components/cardlikebanner";
 import ContactNowSection from "@/components/contactnow";
 import ExperienceSection from "@/components/experiencesection";
 import HeroSection from "@/components/hero";
-import { OurServicesSection } from "@/components/services";
+import { OurServicesSection } from "@/components/services/services";
 import SingleImageSection from "@/components/singleimagesection";
 import WhyChooseUsSection from "@/components/whychooseussection";
 import Fleet from "@/components/fleet/fleet";
 import Footer from "@/components/footer/footer";
 import Faq from "@/components/faqs/faqs";
+import CustomerReviews from "@/components/reviews/reviews";
 export default function Home() {
   return (
     <>
@@ -31,6 +32,7 @@ export default function Home() {
       <WhyChooseUsSection />
       <ExperienceSection />
       <AreasWeCover />
+      <CustomerReviews />
       <Faq />
       <ContactNowSection />
       <Footer />
