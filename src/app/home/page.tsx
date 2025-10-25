@@ -8,7 +8,6 @@ import { OurServicesSection } from "@/components/services/services";
 import SingleImageSection from "@/components/singleimagesection";
 import WhyChooseUsSection from "@/components/whychooseussection";
 import Fleet from "@/components/fleet/fleet";
-import Footer from "@/components/footer/footer";
 import Faq from "@/components/faqs/faqs";
 import CustomerReviews from "@/components/reviews/reviews";
 export default function Home() {
@@ -21,7 +20,7 @@ export default function Home() {
         plainheading=" In Style"
         paragraph="Place your trust in us for VIP chauffeur hire and enjoy an unforgettable journey."
       />
-      <div className="h-[3vh] w-full bg-white"/>
+      <div className="h-[3vh] w-full bg-white" />
       <Fleet />
       <CardLikeBanner
         colorheading="Schedule "
@@ -36,7 +35,6 @@ export default function Home() {
       <CustomerReviews />
       <Faq />
       <ContactNowSection />
-      <Footer />
     </>
   );
 }
