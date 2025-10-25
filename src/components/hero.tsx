@@ -40,7 +40,7 @@ export default function HeroSection() {
                   : "-translate-x-12 opacity-0"
               }`}
             >
-              <div className="max-w-5xl space-y-6">
+              <div className="max-w-5xl space-y-6 mt-10 md:mt-0">
                 <h1 className="font-sans text-3xl font-bold tracking-tight text-white sm:text-5xl lg:text-5xl">
                   Premium Chauffeur Service in Manchester
                 </h1>
