@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/nav/Nav";
+import Footer from "@/components/footer/footer";
 export const metadata: Metadata = {
   title: "Luxury Chaffeur Service",
   description: "Luxury Chaffeur Service",

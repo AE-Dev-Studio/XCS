@@ -161,7 +161,7 @@ export default function BookingForm() {
 
           {/* Name */}
           <div className="flex flex-row gap-2">
-            <div className="space-y-1">
+            <div className="space-y-1 w-full">
               {/* <Label htmlFor="name" className="text-sm font-medium text-gray-900">
               Name <span className="text-red-500">*</span>
             </Label> */}
@@ -186,7 +186,7 @@ export default function BookingForm() {
             </div>
 
             {/* Phone */}
-            <div className="space-y-2">
+            <div className="space-y-2 w-full">
               {/* <Label htmlFor="phone" className="text-sm font-medium text-gray-900">
               Phone <span className="text-red-500">*</span>
             </Label> */}
@@ -215,7 +215,7 @@ export default function BookingForm() {
 
           {/* Email */}
           <div className="flex flex-row gap-2">
-            <div className="">
+            <div className="space-y-1 w-full">
               {/* <Label htmlFor="email" className="text-sm font-medium text-gray-900">
               Email <span className="text-red-500">*</span>
             </Label> */}
@@ -242,10 +242,7 @@ export default function BookingForm() {
             </div>
 
             {/* Vehicle Select */}
-            <div className="">
-              {/* <Label htmlFor="vehicle" className="text-sm font-medium text-gray-900">
-              Vehicle Requested <span className="text-red-500">*</span>
-            </Label> */}
+            <div className="space-y-2 w-full">
               <Select
                 value={formData.vehicle}
                 onValueChange={handleSelectChange}
@@ -295,7 +292,7 @@ export default function BookingForm() {
           </div>
 
           {/* Date */}
-          <div className="space-y-2">
+          <div className="space-y-2 w-full">
             {/* <Label htmlFor="date" className="text-sm font-medium text-gray-900">
               Date <span className="text-red-500">*</span>
             </Label> */}
@@ -320,7 +317,7 @@ export default function BookingForm() {
 
           {/* Pick Up */}
           <div className="flex flex-row gap-2">
-            <div className="space-y-2">
+            <div className="space-y-2 w-full">
               {/* <Label htmlFor="pickUp" className="text-sm font-medium text-gray-900">
               Pick Up <span className="text-red-500">*</span>
             </Label> */}
@@ -347,7 +344,7 @@ export default function BookingForm() {
             </div>
 
             {/* Destination */}
-            <div className="space-y-2">
+            <div className="space-y-2 w-full">
               {/* <Label htmlFor="destination" className="text-sm font-medium text-gray-900">
               Destination
             </Label> */}
@@ -362,7 +359,7 @@ export default function BookingForm() {
             </div>
           </div>
           {/* Other Information */}
-          <div className="space-y-2">
+          <div className="space-y-2 w-full">
             {/* <Label htmlFor="otherInfo" className="text-sm font-medium text-gray-900">
               Other Information
             </Label> */}
