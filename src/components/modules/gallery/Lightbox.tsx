@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,21 +25,20 @@ interface Props {
 }
 
 export default function Lightbox({ images, startIndex, onClose }: Props) {
+  const [realIndex, setRealIndex] = useState(startIndex);
+  const paginationClass = "swiper-pagination-fraction";
   const [zoomed, setZoomed] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [showShare, setShowShare] = useState(false);
 
-  /* ---------- keyboard ---------- */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  /* ---------- zoom toggle ---------- */
   const toggleZoom = () => setZoomed((z) => !z);
 
-  /* ---------- fullscreen toggle ---------- */
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
@@ -50,7 +49,6 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
     }
   };
 
-  /* ---------- share urls ---------- */
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const logoUrl = `${window.location.origin}/images/logo.png`;
 
@@ -66,14 +64,12 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
 
   return createPortal(
     <div className="fixed inset-0 z-50 bg-black/90 flex flex-col text-white">
-      {/* ====== HEADER ====== */}
       <header className="flex items-center justify-between p-4">
-        {/* counter */}
-        <div className="swiper-pagination-lightbox text-sm" />
+        <div className="text-sm">
+          {realIndex + 1}/{images.length}
+        </div>
 
-        {/* controls */}
         <div className="flex items-center gap-3">
-          {/* zoom toggle */}
           <button
             onClick={toggleZoom}
             className="p-2 rounded-full bg-white/20 hover:bg-white/30"
@@ -82,7 +78,6 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
             {zoomed ? <ZoomOut size={18} /> : <ZoomIn size={18} />}
           </button>
 
-          {/* fullscreen toggle */}
           <button
             onClick={toggleFullscreen}
             className="p-2 rounded-full bg-white/20 hover:bg-white/30"
@@ -91,7 +86,6 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
             {fullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
           </button>
 
-          {/* share */}
           <div className="relative">
             <button
               onClick={() => setShowShare((s) => !s)}
@@ -136,28 +130,23 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
       {/* ====== SWIPER ====== */}
       <div className="flex-1">
         <Swiper
-          modules={[Navigation, Pagination, Zoom]}
+          modules={[Navigation, Zoom]} // ← pagination removed
           initialSlide={startIndex}
           navigation
-          pagination={{
-            type: "fraction",
-            el: ".swiper-pagination-lightbox",
-            renderFraction: (current, total) => `${current} / ${total}`,
-          }}
           zoom
+          onActiveIndexChange={(swiper) => setRealIndex(swiper.realIndex)} // live update
           className="w-full h-full"
         >
           {images.map((src) => (
             <SwiperSlide key={src} zoom>
               <div className="swiper-zoom-container h-screen fixed top-0">
-                <img
+                <Image
                   src={src}
                   alt=""
-                  className=""
-                  style={{
-                    transform: zoomed ? "scale(1.1)" : "scale(0.7)",
-                    transition: "transform .3s",
-                  }}
+                  fill
+                  className={`transition-transform duration-500 ${
+                    zoomed ? "scale-100 md:scale-110 " : "scale-75 md:scale-75 "
+                  }`}
                 />
               </div>
             </SwiperSlide>
