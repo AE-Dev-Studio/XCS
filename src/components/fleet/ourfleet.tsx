@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-type Car = {
+export type Car = {
   id: string;
   title: string;
   tagline: string;
@@ -11,7 +11,7 @@ type Car = {
   img: string; // public folder
 };
 
-const FLEET: Car[] = [
+export const FLEET: Car[] = [
   {
     id: "s-class",
     title: "MERCEDES S-CLASS",
@@ -239,7 +239,7 @@ export const XclusiveSlider: React.FC = () => {
 };
 
 /* ---------- card ---------- */
-const CarCard: React.FC<{ car: Car }> = ({ car }) => (
+export const CarCard: React.FC<{ car: Car }> = ({ car }) => (
   <article className="w-[306px] shrink-0 snap-center bg-white rounded-none shadow-xl overflow-hidden">
     <Image
       src={car.img}
