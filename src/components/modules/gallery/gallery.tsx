@@ -14,12 +14,12 @@ export default function Gallery() {
   return (
     <>
       {/* Grid */}
-      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 bg-white px-10 py-20">
         {images.map((src, i) => (
           <div
             key={src}
             onClick={() => setIndex(i)}
-            className="relative aspect-square cursor-pointer overflow-hidden rounded-lg group"
+            className="relative aspect-square cursor-pointer overflow-hidden rounded-none group"
           >
             <img
               src={src}
