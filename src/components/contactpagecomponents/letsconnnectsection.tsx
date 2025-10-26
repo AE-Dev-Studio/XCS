@@ -2,7 +2,7 @@ import LetsConnectForm from './letsconnnectform'
 
 const LetsConnectSection = () => {
     return (
-        <div className="w-full h-full py-20 grid grid-rows-2 sm:grid-cols-2 max-w-[80vw] mx-auto">
+        <div className="w-full h-full py-20 grid grid-rows-1  sm:grid-cols-2 max-w-[80vw] mx-auto">
             <div className="flex flex-col bg-gray-100 p-7 gap-5">
                 <h1 className="font-extrabold text-center text-3xl tracking-wide">
                     Let’s Connect with You
