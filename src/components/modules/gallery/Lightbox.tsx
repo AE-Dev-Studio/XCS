@@ -4,6 +4,15 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Zoom } from "swiper/modules";
+import {
+  ZoomIn,
+  ZoomOut,
+  Maximize,
+  Minimize,
+  Share2,
+  X,
+  Download,
+} from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -16,24 +25,39 @@ interface Props {
 }
 
 export default function Lightbox({ images, startIndex, onClose }: Props) {
-  const [zoom, setZoom] = useState(0.7);
+  const [zoomed, setZoomed] = useState(false);
+  const [fullscreen, setFullscreen] = useState(false);
   const [showShare, setShowShare] = useState(false);
 
+  /* ---------- keyboard ---------- */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  const zoomIn = () => setZoom((z) => Math.min(z + 0.25, 3));
-  const zoomOut = () => setZoom((z) => Math.max(z - 0.25, 0.5));
+  /* ---------- zoom toggle ---------- */
+  const toggleZoom = () => setZoomed((z) => !z);
 
+  /* ---------- fullscreen toggle ---------- */
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+      setFullscreen(true);
+    } else {
+      document.exitFullscreen().catch(() => {});
+      setFullscreen(false);
+    }
+  };
+
+  /* ---------- share urls ---------- */
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const logoUrl = `${window.location.origin}/images/logo.png`;
 
   const fbShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
     shareUrl
   )}&picture=${encodeURIComponent(logoUrl)}`;
+
   const pinShare = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(
     shareUrl
   )}&media=${encodeURIComponent(
@@ -41,32 +65,30 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
   )}&description=Check%20out%20our%20gallery!`;
 
   return createPortal(
-    <div className="fixed inset-0 z-50 bg-black/90 flex flex-col">
-      {/* Header bar */}
-      <header className="flex items-center justify-between text-white p-4">
-        <span className="text-sm">
-          <span className="swiper-pagination-lightbox" />
-        </span>
+    <div className="fixed inset-0 z-50 bg-black/90 flex flex-col text-white">
+      {/* ====== HEADER ====== */}
+      <header className="flex items-center justify-between p-4">
+        {/* counter */}
+        <div className="swiper-pagination-lightbox text-sm" />
 
+        {/* controls */}
         <div className="flex items-center gap-3">
-          {/* zoom controls */}
+          {/* zoom toggle */}
           <button
-            onClick={zoomOut}
+            onClick={toggleZoom}
             className="p-2 rounded-full bg-white/20 hover:bg-white/30"
-            aria-label="zoom out"
+            aria-label="toggle zoom"
           >
-            <svg className="w-5 h5" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M3 10h14v2H3z" />
-            </svg>
+            {zoomed ? <ZoomOut size={18} /> : <ZoomIn size={18} />}
           </button>
+
+          {/* fullscreen toggle */}
           <button
-            onClick={zoomIn}
+            onClick={toggleFullscreen}
             className="p-2 rounded-full bg-white/20 hover:bg-white/30"
-            aria-label="zoom in"
+            aria-label="toggle fullscreen"
           >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 3v14M3 10h14" />
-            </svg>
+            {fullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
           </button>
 
           {/* share */}
@@ -75,13 +97,11 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
               onClick={() => setShowShare((s) => !s)}
               className="p-2 rounded-full bg-white/20 hover:bg-white/30"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.32l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.001 3.001 0 000-1.42l4.94-2.47C13.11 2.37 14.18 2 15 2z" />
-              </svg>
+              <Share2 size={18} />
             </button>
 
             {showShare && (
-              <div className="absolute right-0 top-12 bg-white text-black rounded-lg shadow-lg p-3 flex gap-3">
+              <div className="absolute right-0 top-12 bg-white text-black rounded-lg shadow-lg p-3 flex gap-3 text-sm">
                 <a
                   href={fbShare}
                   target="_blank"
@@ -108,14 +128,12 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
             className="p-2 rounded-full bg-white/20 hover:bg-white/30"
             aria-label="close"
           >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-            </svg>
+            <X size={18} />
           </button>
         </div>
       </header>
 
-      {/* Swiper viewport */}
+      {/* ====== SWIPER ====== */}
       <div className="flex-1">
         <Swiper
           modules={[Navigation, Pagination, Zoom]}
@@ -131,12 +149,15 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
         >
           {images.map((src) => (
             <SwiperSlide key={src} zoom>
-              <div className="swiper-zoom-container h-full flex items-center justify-center">
+              <div className="swiper-zoom-container h-screen fixed top-0">
                 <img
                   src={src}
                   alt=""
-                  className="max-w-full max-h-full object-contain"
-                  style={{ transform: `scale(${zoom})` }}
+                  className=""
+                  style={{
+                    transform: zoomed ? "scale(1.1)" : "scale(0.7)",
+                    transition: "transform .3s",
+                  }}
                 />
               </div>
             </SwiperSlide>
@@ -144,17 +165,14 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
         </Swiper>
       </div>
 
-      {/* Download bar */}
-      <footer className="p-4 text-white flex items-center justify-center">
+      {/* ====== FOOTER / DOWNLOAD ====== */}
+      <footer className="p-4 flex items-center justify-center">
         <a
           href={images[startIndex]}
           download
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/20 hover:bg-white/30"
         >
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10.75 2.75a.75.75 0 00-1.5 0v8.5a.75.75 0 001.5 0v-8.5z" />
-            <path d="M15.25 11.25a.75.75 0 00-1.06-1.06l-3.72 3.72V7.5a.75.75 0 00-1.5 0v6.44l-3.72-3.72a.75.75 0 00-1.06 1.06l5 5a.75.75 0 001.06 0l5-5z" />
-          </svg>
+          <Download size={18} />
           Download
         </a>
       </footer>
