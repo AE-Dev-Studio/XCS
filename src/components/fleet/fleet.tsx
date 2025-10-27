@@ -21,7 +21,7 @@ function Fleet() {
           />
         </div>
         <h5 className="text-center text-white font-semibold mb-3">
-          Xclusive Chauffeurs
+          CCS Chauffeurs
         </h5>
         {/* Bullets */}
         <ul className="space-y-2 text-sm text-white">
@@ -93,7 +93,7 @@ function Fleet() {
         </div>
 
         <h5 className="text-center text-white font-semibold mb-3">
-          Xclusive Chauffeurs
+          CCS Chauffeurs
         </h5>
 
         {/* Bullets */}

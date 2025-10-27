@@ -38,11 +38,11 @@ const Footer: React.FC = () => {
             {/* Phone Numbers */}
             <div className="flex flex-wrap gap-8 text-lg">
               <a
-                href="tel:08000614940"
+                href="tel:07803553793"
                 className="flex items-center gap-2 hover:text-[#a89447] transition"
               >
                 <Phone className="w-5 h-5 text-[#a89447]" />
-                <span>0800 061 4940</span>
+                <span>07803553793</span>
               </a>
             </div>
           </div>
@@ -169,29 +169,27 @@ const Footer: React.FC = () => {
             <ul className="space-y-4 text-gray-300">
               <li>
                 <a
-                  href="tel:07497363737"
+                  href="tel:07803553793"
                   className="flex items-center gap-2 hover:text-[#a89447] transition"
                 >
                   <Phone className="w-4 h-4 shrink-0" />
-                  <span>074 9736 3737</span>
+                  <span>07803553793</span>
                 </a>
               </li>
 
               <li>
                 <a
-                  href="mailto:info@xclusivechauffeurs.co.uk"
+                  href="mailto:Riz.elite@yahoo.com"
                   className="flex items-center gap-2 hover:text-[#a89447] transition"
                 >
                   <Mail className="w-4 h-4 shrink-0" />
-                  <span className="break-all">
-                    info@xclusivechauffeurs.co.uk
-                  </span>
+                  <span className="break-all">Riz.elite@yahoo.com</span>
                 </a>
               </li>
               <li>
                 <div className="flex items-start gap-2">
                   <MapPin className="w-4 h-4 shrink-0 mt-1" />
-                  <span>Xclusive Chauffeur Services, United Kingdom</span>
+                  <span>CCS Chauffeur Services, United Kingdom</span>
                 </div>
               </li>
             </ul>
@@ -244,7 +242,7 @@ const Footer: React.FC = () => {
 
       {/* WhatsApp Button */}
       <a
-        href="https://wa.me/447497363737"
+        href="https://wa.me/07803553793"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition duration-300 flex items-center gap-2 z-50"
@@ -259,7 +257,7 @@ const Footer: React.FC = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-wrap justify-between items-center gap-4">
             <p className="text-[13px] text-gray-400">
-              © 2025 | Xclusive Chauffeur | All Right Reserved
+              © 2025 | CCS Chauffeur | All Right Reserved
             </p>
             <div className="flex items-center gap-6">
               <a
