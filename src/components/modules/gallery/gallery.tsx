@@ -14,7 +14,7 @@ export default function Gallery() {
   return (
     <>
       {/* Grid */}
-      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 bg-white px-10 py-20">
+      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 bg-white ">
         {images.map((src, i) => (
           <div
             key={src}
