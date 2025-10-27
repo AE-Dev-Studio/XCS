@@ -38,11 +38,11 @@ const Footer: React.FC = () => {
             {/* Phone Numbers */}
             <div className="flex flex-wrap gap-8 text-lg">
               <a
-                href="tel:07803553793"
+                href="tel:+44 7803 553793"
                 className="flex items-center gap-2 hover:text-[#a89447] transition"
               >
                 <Phone className="w-5 h-5 text-[#a89447]" />
-                <span>07803553793</span>
+                <span>+44 7803 553793</span>
               </a>
             </div>
           </div>
@@ -169,11 +169,11 @@ const Footer: React.FC = () => {
             <ul className="space-y-4 text-gray-300">
               <li>
                 <a
-                  href="tel:07803553793"
+                  href="tel:+44 7803 553793"
                   className="flex items-center gap-2 hover:text-[#a89447] transition"
                 >
                   <Phone className="w-4 h-4 shrink-0" />
-                  <span>07803553793</span>
+                  <span>+44 7803 553793</span>
                 </a>
               </li>
 
@@ -242,7 +242,7 @@ const Footer: React.FC = () => {
 
       {/* WhatsApp Button */}
       <a
-        href="https://wa.me/07803553793"
+        href="https://wa.me/+447803553793"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition duration-300 flex items-center gap-2 z-50"

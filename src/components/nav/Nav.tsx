@@ -69,11 +69,11 @@ function Nav() {
     <header className="w-full bg-transparent fixed top-0 mb-10 z-50">
       <div className="px-12 flex justify-between items-center">
         <Link
-          href="tel:07497363737"
+          href="https://wa.me/+447803553793"
           className="hidden md:flex text-white hover:opacity-80 mt-4"
         >
           <Flag />
-          <span className="text-sm md:text-base">074 9736 3737</span>
+          <span className="text-sm md:text-base">+44 7803 553793</span>
         </Link>
 
         <Link href="/">

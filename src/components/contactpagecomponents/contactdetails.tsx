@@ -4,17 +4,17 @@ import { ContactInfoCard } from "./contactinfocard";
 const details = [
   {
     icon: PhoneCall,
-    link: "https://www.google.com", //replace with actual link
-    description: "07803553793",
+    link: "https://wa.me/+447803553793", //replace with actual link
+    description: "+447803553793",
   },
   {
     icon: Mail,
-    link: "https://www.google.com", //replace with actual link
+    link: "mail: Riz.elite@yahoo.com", //replace with actual link
     description: "Riz.elite@yahoo.com",
   },
   {
     icon: MapPin,
-    link: "https://www.google.com", //replace with actual link
+    link: "/home", //replace with actual link
     description: "CCS Chauffeur Services, United Kingdom",
   },
 ];
