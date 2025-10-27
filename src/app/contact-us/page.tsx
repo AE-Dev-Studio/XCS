@@ -11,7 +11,6 @@ function ContactUs() {
       <Contactsectionhero />
       <ContactDetails />
       <LetsConnectSection />
-      <Footer />
     </>
   );
 }
