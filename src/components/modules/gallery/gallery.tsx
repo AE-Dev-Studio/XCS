@@ -4,8 +4,8 @@ import { useState } from "react";
 import Lightbox from "./Lightbox";
 
 const images = Array.from(
-  { length: 6 },
-  (_, i) => `/assets/Services/${i + 1}.jpg`
+  { length: 12 },
+  (_, i) => `/assets/Gallery/${i + 1}.jpg`
 );
 
 export default function Gallery() {
