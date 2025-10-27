@@ -1,14 +1,21 @@
 "use client";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-export default function Herobg({ text }: { text: string }) {
+
+
+interface HerobgProps {
+  text: string;
+  image?: string; // optional prop
+}
+
+export default function Herobg({ text, image = "/assets/herobackground.jpg" }: HerobgProps) {
   return (
     <div className="relative min-h-screen w-screen flex flex-col items-center justify-center px-6 text-white">
       <div className="absolute inset-0 -z-10">
         <div
           className="h-full w-full bg-cover bg-center"
           style={{
-            backgroundImage: "url(/assets/herobackground.jpg)",
+            backgroundImage:  `url(${image})`,
           }}
         >
           <div className="absolute inset-0 bg-black/60" />
