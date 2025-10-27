@@ -15,7 +15,7 @@ export const FLEET: Car[] = [
   {
     id: "s-class",
     title: "MERCEDES S-CLASS",
-    tagline: "Xclusive Chauffeurs",
+    tagline: "CCS Chauffeurs",
     hourly: 60,
     daily: 480,
     img: "/assets/FleetCars/mercedes.png",
@@ -39,7 +39,7 @@ export const FLEET: Car[] = [
   {
     id: "e-class",
     title: "MERCEDES E-CLASS",
-    tagline: "Xclusive Chauffeurs",
+    tagline: "CCS Chauffeurs",
     hourly: 40,
     daily: 320,
     img: "/assets/FleetCars/3.png",
