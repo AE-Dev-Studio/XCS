@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useState } from "react";
 import Lightbox from "./Lightbox";
 
@@ -21,8 +21,9 @@ export default function Gallery() {
             onClick={() => setIndex(i)}
             className="relative aspect-square cursor-pointer overflow-hidden rounded-none group"
           >
-            <img
+            <Image
               src={src}
+              fill
               alt={`img-${i + 1}`}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
