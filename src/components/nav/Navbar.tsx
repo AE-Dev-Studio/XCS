@@ -99,12 +99,7 @@ export default function Navbar() {
         {navLinks.map((link) =>
           link.children ? (
             <li key={link.label}>
-              <Dropdown
-                label={link.label}
-                items={link.children.map((c: any) =>
-                  c.children ? { label: c.label, href: c.href } : c
-                )}
-              />
+              <Dropdown label={link.label} items={link.children} />
             </li>
           ) : (
             <li key={link.label}>
