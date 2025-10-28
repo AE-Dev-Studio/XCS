@@ -50,7 +50,7 @@ export default function Dropdown({
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items
-          className="absolute left-0 mt-2 w-56 origin-top-right bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 focus:outline-none z-50"
+          className=" gpu-layer absolute left-0 mt-2 w-56 origin-top-right bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 focus:outline-none z-50"
           onMouseEnter={() => setOpen(true)}
           onMouseLeave={() => setOpen(false)}
         >
@@ -81,7 +81,6 @@ export default function Dropdown({
   );
 }
 
-/* ---------- sub-menu component ---------- */
 function NestedItem({
   item,
   closeRoot,
@@ -90,57 +89,82 @@ function NestedItem({
   closeRoot: () => void;
 }) {
   const [show, setShow] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const nodeRef = useRef<HTMLDivElement>(null); // real DOM node
 
+  const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
+
+  /* desktop hover helpers */
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const enter = () => {
-    if (timer.current) {
-      clearTimeout(timer.current);
-      timer.current = null;
-    }
+    if (!isDesktop) return;
+    if (timer.current) clearTimeout(timer.current);
     setShow(true);
   };
   const leave = () => {
-    timer.current = setTimeout(() => setShow(false), 60); // small debounce
+    if (!isDesktop) return;
+    timer.current = setTimeout(() => setShow(false), 60);
+  };
+
+  /* mobile tap toggles */
+  const handleParentClick = (e: React.MouseEvent) => {
+    if (isDesktop) return;
+    if (!show) {
+      e.preventDefault();
+      setShow(true);
+    }
   };
 
   return (
-    <Menu.Item>
-      {({ active }) => (
-        <div onMouseEnter={enter} onMouseLeave={leave} className="relative">
+    <div
+      ref={nodeRef}
+      onMouseEnter={enter}
+      onMouseLeave={leave}
+      className="relative"
+    >
+      {/* Menu.Item is now a pure wrapper – ref is on the outer div */}
+      <Menu.Item>
+        {({ active }) => (
           <Link
             href={item.href}
             className={`${
               active ? "bg-black/20" : ""
             } flex items-center justify-between px-4 py-2 text-sm text-white`}
-            onClick={closeRoot}
+            onClick={(e) => {
+              if (isDesktop) closeRoot();
+              handleParentClick(e);
+            }}
           >
             {item.label}
-            <ChevronDownIcon className="w-3 h-3 -rotate-90" />
+            <ChevronDownIcon
+              className={`w-3 h-3 transition-transform ${
+                show ? "rotate-0" : "-rotate-90"
+              }`}
+            />
           </Link>
+        )}
+      </Menu.Item>
 
-          {/* sub panel – flush against parent item */}
-          <div
-            className={`absolute left-full top-0 ml-0 w-56 bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 transition-opacity ${
-              show
-                ? "opacity-100 pointer-events-auto"
-                : "opacity-0 pointer-events-none"
-            }`}
-            onMouseEnter={enter} // treat sub-panel as part of the item
-            onMouseLeave={leave}
+      {/* sub panel – same as before */}
+      <div
+        className={`gpu-layer md:absolute md:left-full md:top-0 md:ml-0 w-full md:w-56 bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 transition-all duration-200 ${
+          show
+            ? "max-h-screen opacity-100 pointer-events-auto"
+            : "max-h-0 opacity-0 pointer-events-none"
+        } overflow-hidden`}
+        onMouseEnter={enter}
+        onMouseLeave={leave}
+      >
+        {item.children!.map((sub) => (
+          <Link
+            key={sub.href}
+            href={sub.href}
+            className="block px-4 py-2 text-sm text-white hover:bg-black/20"
+            onClick={closeRoot}
           >
-            {item.children!.map((sub) => (
-              <Link
-                key={sub.href}
-                href={sub.href}
-                className="block px-4 py-2 text-sm text-white hover:bg-black/20"
-                onClick={closeRoot}
-              >
-                {sub.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-    </Menu.Item>
+            {sub.label}
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
