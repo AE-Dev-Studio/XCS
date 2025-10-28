@@ -17,6 +17,7 @@ const Page = () => {
       />
       <Resusablefleet />
       <Getaqoutesection
+        image="\assets\Luxury\3lamborghini-aventador-svj-roadster.jpeg"
         heading="Luxury Wedding Car Hire in Manchester - Your Journey to Forever Begins Here"
         paragraph="At CCS Chauffeurs, we pride ourselves on offering a captivating array of luxury wedding car hire options in Manchester. From timeless classics to modern marvels, our fleet is meticulously maintained to ensure your journey to the altar is as glamorous and unforgettable as the day itself. Trust our chauffeur wedding services to add a touch of sophistication to your wedding day.."
       />
