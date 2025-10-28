@@ -90,10 +90,13 @@ function NestedItem({
   closeRoot: () => void;
 }) {
   const [show, setShow] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const enter = () => {
-    clearTimeout(timer.current);
+    if (timer.current) {
+      clearTimeout(timer.current);
+      timer.current = null;
+    }
     setShow(true);
   };
   const leave = () => {
@@ -112,7 +115,7 @@ function NestedItem({
             onClick={closeRoot}
           >
             {item.label}
-            <ChevronDownIcon className="w-3 h-3 rotate-[-90deg]" />
+            <ChevronDownIcon className="w-3 h-3 -rotate-90" />
           </Link>
 
           {/* sub panel – flush against parent item */}
