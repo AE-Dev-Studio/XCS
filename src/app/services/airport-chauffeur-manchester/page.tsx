@@ -20,6 +20,7 @@ const Page = () => {
       />
       <Resusablefleet />
       <Getaqoutesection
+        image="\assets\Luxury\3lamborghini-aventador-svj-roadster.jpeg"
         heading="Elevated Excellence in Executive Airport Transfers"
         paragraph="Uncover the pinnacle of service with CCS Chauffeurs’ executive airport transfers, meticulously designed for the most discerning travelers. Our commitment to excellence permeates every detail, promising an indulgent experience for business and leisure trips. Immerse yourself in the epitome of comfort and style as we redefine the standards of airport transfers in Manchester."
       />
