@@ -94,19 +94,12 @@ export default function Navbar() {
   const isActive = (href: string) => router === href;
 
   return (
-    <nav className="max-w-screen-6xl mx-auto px-4 py-2">
+    <nav className="w-screen mx-auto px-4 py-2">
       <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-white text-sm md:text-base">
         {navLinks.map((link) =>
           link.children ? (
             <li key={link.label}>
-              <Dropdown
-                label={link.label}
-                items={link.children.map((c: any) =>
-                  c.children
-                    ? { label: c.label, href: c.href } // parent of nested
-                    : c
-                )}
-              />
+              <Dropdown label={link.label} items={link.children} />
             </li>
           ) : (
             <li key={link.label}>
