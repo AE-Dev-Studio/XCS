@@ -17,6 +17,7 @@ const Page = () => {
       />
       <Resusablefleet />
       <Getaqoutesection
+        image="\assets\Luxury\3lamborghini-aventador-svj-roadster.jpeg"
         heading="Refined Corporate Car Services in Manchester and Beyond"
         paragraph="Our corporate car rental services in Manchester redefine the standards of executive travel. Tailored to the distinctive needs of businesses, our chauffeur service for corporate events guarantees an unparalleled blend of reliability, elegance, and efficiency. Whether you’re attending conferences, meetings, or other corporate functions, our fleet of top-tier vehicles and professional chauffeurs make every journey a statement of corporate sophistication.r."
       />

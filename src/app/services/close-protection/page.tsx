@@ -17,6 +17,7 @@ const Page = () => {
       />
       <Resusablefleet />
       <Getaqoutesection
+        image="\assets\Luxury\3lamborghini-aventador-svj-roadster.jpeg"
         heading="Manchester Trusted Close Protection Chauffeurs - Your Safety, Our Priority"
         paragraph="In Manchester, CCS Chauffeurs is the epitome of trust in close protection chauffeur services. Our team of highly trained professionals seamlessly combines security expertise with chauffeur excellence, ensuring you experience peace of mind throughout your journey. Discover the perfect blend of safety and luxury with our close-protection chauffeur service."
       />
