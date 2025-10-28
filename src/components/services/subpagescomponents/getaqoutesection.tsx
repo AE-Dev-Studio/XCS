@@ -5,12 +5,13 @@ import Image from "next/image";
 import CustomButton from "../../custombutton";
 import Callnowcard from "../../aboutpagecomponents/callnowcard";
 
-interface Props{
-    heading: string
-    paragraph : string
+interface Props {
+  heading: string;
+  paragraph: string;
+  image: string;
 }
 
-export default function Getaqoutesection({heading , paragraph} : Props) {
+export default function Getaqoutesection({ heading, paragraph, image }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -48,7 +49,7 @@ export default function Getaqoutesection({heading , paragraph} : Props) {
           >
             <div className="relative w-full min-h-[60vh] rounded-none border-15 border-white overflow-hidden shadow-2xl">
               <Image
-                src="/assets/aboutimage.jpg"
+                src={image}
                 alt="Luxury chauffeur vehicle"
                 fill
                 className="object-cover"
@@ -73,9 +74,7 @@ export default function Getaqoutesection({heading , paragraph} : Props) {
               </div>
               {/* Body Text */}
               <div className="space-y-2 font-sans text-black ">
-                <p>
-                  {paragraph}
-                </p>
+                <p>{paragraph}</p>
               </div>
 
               {/* Learn More Button */}

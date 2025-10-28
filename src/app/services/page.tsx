@@ -1,4 +1,4 @@
-import Herobg from '@/components/herobg'
+import Herobg from "@/components/herobg";
 
 import { ServiceCard } from "../../components/services/service-card";
 
@@ -50,7 +50,10 @@ function OurServicesSectionWhite() {
           Our <span className="text-[#c1b16e]">Services</span>{" "}
         </h2>
         <div className="w-25 h-1 bg-black text-center mx-auto" />
-        <p className='mt-5'>We offer luxury chauffeur services for a range of needs and occasions. Learn about our exclusive services here.</p>
+        <p className="mt-5">
+          We offer luxury chauffeur services for a range of needs and occasions.
+          Learn about our exclusive services here.
+        </p>
       </div>
 
       <div className="max-w-8xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -67,15 +70,13 @@ function OurServicesSectionWhite() {
   );
 }
 
-
 const Page = () => {
   return (
     <>
-        <Herobg text='Our Services'/>
-        <OurServicesSectionWhite />
-
+      <Herobg text="Our Services" />
+      <OurServicesSectionWhite />
     </>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
