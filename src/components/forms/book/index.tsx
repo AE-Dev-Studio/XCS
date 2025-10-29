@@ -38,7 +38,6 @@ export default function BookingForm() {
 
   const onSubmit = (data: FormValues) => {
     console.log("FINAL DATA", data);
-    // TODO: POST /api/booking
   };
 
   const Components = [Step1, Step2, Step3, Step4];
@@ -50,21 +49,20 @@ export default function BookingForm() {
         onSubmit={methods.handleSubmit(onSubmit)}
         className="mx-auto max-w-3xl rounded-2xl bg-white p-6 shadow-lg"
       >
-        {/* Progress bar */}
         <div className="mb-6">
-          <div className="flex items-center justify-between text-sm text-gray-500">
+          <div className="flex items-center justify-between text-sm text-gray-600">
             {steps.map((label, idx) => (
               <div key={label} className="flex items-center gap-2">
                 <span
                   className={`grid h-7 w-7 place-items-center rounded-full text-xs font-semibold ${
                     idx <= current
-                      ? "bg-indigo-600 text-white"
+                      ? "bg-[#a89447] text-white"
                       : "bg-gray-200 text-gray-600"
                   }`}
                 >
                   {idx + 1}
                 </span>
-                <span className={`${idx <= current ? "text-indigo-600" : ""}`}>
+                <span className={`${idx <= current ? "text-[#a89447]" : ""}`}>
                   {label}
                 </span>
               </div>
@@ -72,7 +70,7 @@ export default function BookingForm() {
           </div>
           <div className="mt-2 h-2 w-full rounded bg-gray-200">
             <div
-              className="h-2 rounded bg-indigo-600 transition-all"
+              className="h-2 rounded bg-[#a89447] transition-all"
               style={{ width: `${((current + 1) / steps.length) * 100}%` }}
             />
           </div>
@@ -99,7 +97,7 @@ export default function BookingForm() {
           {current === steps.length - 1 ? (
             <button
               type="submit"
-              className="rounded-md bg-indigo-600 px-6 py-2 text-sm text-white hover:bg-indigo-700"
+              className="rounded-md bg-[#a89447] px-6 py-2 text-sm text-white hover:bg-gray-400"
             >
               Request Quote
             </button>
@@ -107,7 +105,7 @@ export default function BookingForm() {
             <button
               type="button"
               onClick={next}
-              className="rounded-md bg-indigo-600 px-6 py-2 text-sm text-white hover:bg-indigo-700"
+              className="rounded-md bg-[#a89447] px-6 py-2 text-sm text-white hover:bg-gray-400"
             >
               Next
             </button>
