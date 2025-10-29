@@ -146,7 +146,7 @@ function NestedItem({
 
       {/* sub panel – same as before */}
       <div
-        className={`gpu-layer md:absolute md:left-full md:top-0 md:ml-0 w-full md:w-56 bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 transition-all duration-200 ${
+        className={`gpu-layer md:absolute md:left-full md:top-0 md:ml-0 md:w-60 md:h-80 bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 transition-all duration-200 ${
           show
             ? "max-h-screen opacity-100 pointer-events-auto"
             : "max-h-0 opacity-0 pointer-events-none"
@@ -158,7 +158,7 @@ function NestedItem({
           <Link
             key={sub.href}
             href={sub.href}
-            className="block px-4 py-2 text-sm text-white hover:bg-black/20"
+            className="block px-4 py-1 text-sm text-white hover:bg-black/20"
             onClick={closeRoot}
           >
             {sub.label}
