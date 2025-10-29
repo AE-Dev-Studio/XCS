@@ -88,7 +88,6 @@ export default function Step4() {
 
   return (
     <main className="max-w-7xl mx-auto p-6">
-      {/* Heading ---------------------------------------------------- */}
       <fieldset className="border border-gray-300 rounded p-4">
         <legend className="text-lg font-semibold text-gray-700 flex items-center gap-2 px-2">
           <Icon name="fa-check-square-o" />

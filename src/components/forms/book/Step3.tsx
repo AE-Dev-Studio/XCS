@@ -30,12 +30,12 @@ const InputGroup: React.FC<
 > = ({ icon, placeholder, ...rest }) => (
   <div className="relative">
     <input
-      className="w-full rounded-md border border-gray-300 px-3 py-2 pr-10 text-sm placeholder-gray-400 focus:border-indigo-500 focus:outline-none"
+      className="w-full rounded-md border border-gray-300 px-3 py-2 pr-10 text-sm placeholder-gray-400 focus:border-[#a89447] focus:outline-none"
       placeholder={placeholder}
       {...rest}
     />
     {icon && (
-      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-700">
         {icon}
       </div>
     )}
@@ -52,7 +52,7 @@ const NumberSpinner: React.FC<{
     <button
       type="button"
       onClick={() => onChange(Math.max(min, value - 1))}
-      className="rounded p-1 hover:bg-gray-100"
+      className="rounded p-1 hover:bg-gray-500"
       aria-label="Decrement"
     >
       <Minus className="h-4 w-4" />
@@ -61,7 +61,7 @@ const NumberSpinner: React.FC<{
     <button
       type="button"
       onClick={() => onChange(Math.min(max, value + 1))}
-      className="rounded p-1 hover:bg-gray-100"
+      className="rounded p-1 hover:bg-gray-500"
       aria-label="Increment"
     >
       <Plus className="h-4 w-4" />
@@ -83,14 +83,14 @@ const Step3: React.FC = () => {
   const [moreInfo, setMoreInfo] = useState(false);
   const [passengerName, setPassengerName] = useState("");
   return (
-    <div className="rounded-lg bg-white p-6 shadow">
+    <div className="rounded-lg bg-white text-gray-700 p-6 shadow">
       <Row label="Name">
         <input
           type="text"
           value={passengerName}
           onChange={(e) => setPassengerName(e.target.value)}
           placeholder="Type passenger name"
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 focus:border-indigo-500 focus:outline-none"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 focus:border-[#a89447] focus:outline-none"
         />
       </Row>
 
@@ -155,7 +155,7 @@ const Step3: React.FC = () => {
             placeholder="ex: 2"
             value={suitcases}
             onChange={(e) => setSuitcases(e.target.value)}
-            className="max-w-[6rem]"
+            className="max-w-[6rem] py-1 px-1"
           />
           <span className="self-center text-sm text-gray-600">case(s)</span>
         </div>
@@ -168,7 +168,7 @@ const Step3: React.FC = () => {
             placeholder="ex: 2"
             value={handLuggage}
             onChange={(e) => setHandLuggage(e.target.value)}
-            className="max-w-[6rem]"
+            className="max-w-[6rem] px-1 py-1"
           />
           <span className="self-center text-sm text-gray-600">
             hand luggage(s)
@@ -181,7 +181,7 @@ const Step3: React.FC = () => {
         <input
           id="booking-else"
           type="checkbox"
-          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          className="h-4 w-4 rounded border-gray-300 text-[#a89447] focus:ring-[#a89447]"
           checked={bookingElse}
           onChange={(e) => setBookingElse(e.target.checked)}
         />
@@ -196,9 +196,7 @@ const Step3: React.FC = () => {
       {bookingElse && (
         <>
           <Row label="Booked by">
-            <select className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
-              <option>Select or type your name</option>
-            </select>
+            <input className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-[#a89447] focus:outline-none"></input>
           </Row>
 
           <Row label="Booker mobile">
@@ -223,14 +221,9 @@ const Step3: React.FC = () => {
           <InputGroup
             type="text"
             placeholder="ex: BA 123"
-            className="uppercase"
+            className="uppercase py-1 px-1"
           />
-          <button
-            type="button"
-            className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm hover:bg-gray-50"
-          >
-            <Search className="h-4 w-4" />
-          </button>
+
           <div className="flex items-center gap-2">
             <input
               id="more-flight"
@@ -252,7 +245,7 @@ const Step3: React.FC = () => {
       {moreFlight && (
         <>
           <Row label="Airline">
-            <select className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+            <select className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-[#a89447] focus:outline-none">
               <option>Emirates</option>
               <option>British Airways</option>
               <option>Easyjet</option>
@@ -261,7 +254,7 @@ const Step3: React.FC = () => {
 
           <Row label="Arrival time">
             <InputGroup
-              type="text"
+              type="time"
               icon={<Plane className="h-4 w-4" />}
               placeholder=""
             />
@@ -279,20 +272,8 @@ const Step3: React.FC = () => {
           </Row>
 
           <Row label="Meeting point">
-            <select className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
-              <option>Select a meeting point</option>
-            </select>
+            <input className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-[#a89447] focus:outline-none"></input>
           </Row>
-
-          <div className="col-start-4 col-span-8">
-            <button
-              type="button"
-              className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm hover:bg-gray-50"
-            >
-              <Plane className="h-4 w-4" />
-              Check Flight Status …
-            </button>
-          </div>
         </>
       )}
 
@@ -332,7 +313,7 @@ const Step3: React.FC = () => {
           <Row label="Instructions">
             <textarea
               rows={3}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 focus:border-indigo-500 focus:outline-none"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 focus:border-[#a89447] focus:outline-none"
               maxLength={500}
             />
             <div className="mt-1 text-right text-xs text-gray-500">0 / 500</div>

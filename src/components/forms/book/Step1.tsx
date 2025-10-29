@@ -295,9 +295,9 @@ export default function Step1() {
   return (
     <form
       onSubmit={onSubmit}
-      className="mx-auto max-w-3xl space-y-6 rounded-2xl bg-black text-white p-6 shadow-lg"
+      className="mx-auto max-w-3xl space-y-6 rounded-2xl bg-white text-black p-6 shadow-lg"
     >
-      <h2 className="text-2xl font-bold text-white">Journey Details</h2>
+      <h2 className="text-2xl font-bold text-black">Journey Details</h2>
 
       {/* Service type */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -342,11 +342,11 @@ export default function Step1() {
       )}
 
       <div>
-        <label className="block text-sm font-medium text-white">
+        <label className="block text-sm font-medium text-black">
           Pick-up location
         </label>
         <select
-          className="mt-1 w-full rounded-md py-2 px-1 bg-black border-black shadow-sm"
+          className="mt-1 w-full rounded-md py-2 px-1 bg-white border-black shadow-sm"
           value={booking.pickupAirport}
           onChange={(e) => onChange("pickupAirport", e.target.value)}
         >
@@ -362,7 +362,7 @@ export default function Step1() {
       {/* Via points */}
       <div>
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-white">Via points</label>
+          <label className="text-sm font-medium text-black">Via points</label>
           <button
             type="button"
             onClick={addViaPoint}
@@ -383,7 +383,7 @@ export default function Step1() {
             <button
               type="button"
               onClick={() => removeViaPoint(idx)}
-              className="shrink-0 text-white hover:text-white"
+              className="shrink-0 text-black hover:text-black"
               aria-label="Remove this via point"
             >
               <svg
@@ -410,11 +410,11 @@ export default function Step1() {
         <>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-black">
                 Flight type
               </label>
               <select
-                className="mt-1 w-full rounded-md py-1 px-1 bg-black border-gray-300 shadow-sm"
+                className="mt-1 w-full rounded-md py-1 px-1 bg-white border-gray-300 shadow-sm"
                 value={booking.flightType}
                 onChange={(e) => onChange("flightType", e.target.value as any)}
               >
@@ -423,7 +423,7 @@ export default function Step1() {
               </select>
             </div>
             <div>
-              <label className="block text-sm  font-medium text-gray-700">
+              <label className="block text-sm  font-medium text-black">
                 Flight number
               </label>
               <input
@@ -440,7 +440,7 @@ export default function Step1() {
       {/* Date & Time */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-black">
             Pick-up date
           </label>
           <input
@@ -451,7 +451,7 @@ export default function Step1() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-black">
             Pick-up time
           </label>
           <input
@@ -467,7 +467,7 @@ export default function Step1() {
         {(["passengers", "luggage", "childSeats", "boosterSeats"] as const).map(
           (key) => (
             <div key={key}>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-black">
                 {key.replace(/([A-Z])/g, " $1")}
               </label>
               <input

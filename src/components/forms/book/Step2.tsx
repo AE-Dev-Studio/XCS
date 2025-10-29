@@ -59,7 +59,7 @@ export default function Step2() {
   const [selectedVehicle, setSelectedVehicle] = useState<string>("business");
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-6 bg-black text-white">
+    <div className="max-w-5xl mx-auto p-6 space-y-6 bg-white text-black">
       {/* Request Type */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -107,7 +107,7 @@ export default function Step2() {
               Payment type
             </label>
             <select
-              className="w-full rounded-md py-2 px-1 bg-black border-gray-300 shadow-sm"
+              className="w-full rounded-md py-2 px-1 bg-white border-gray-300 shadow-sm"
               value={paymentType}
               onChange={(e) => setPaymentType(e.target.value)}
             >
@@ -129,7 +129,7 @@ export default function Step2() {
       {/* Type of Vehicle title */}
       <div>
         <h3 className="text-lg font-semibold">Type of vehicle</h3>
-        <p className="text-sm text-white">Please select a vehicle</p>
+        <p className="text-sm text-gray-700">Please select a vehicle</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {vehicles.map((v) => (
@@ -161,9 +161,9 @@ export default function Step2() {
 
             {/* ---------- EVERYTHING UNDER THE IMAGE ---------- */}
             <div className="mt-3 space-y-2">
-              <div className="font-semibold text-white">{v.name}</div>
+              <div className="font-semibold text-gray-700">{v.name}</div>
 
-              <ul className="text-sm text-white space-y-1">
+              <ul className="text-sm text-gray-700 space-y-1">
                 <li>Max passengers: {v.passengers}</li>
                 <li>Max suitcases: {v.suitcases}</li>
                 <li>Max hand luggage: {v.handLuggage}</li>
