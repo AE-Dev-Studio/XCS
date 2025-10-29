@@ -80,7 +80,6 @@ const Step3: React.FC = () => {
 
   const [bookingElse, setBookingElse] = useState(false);
   const [moreFlight, setMoreFlight] = useState(false);
-  const [moreCruise, setMoreCruise] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
   const [passengerName, setPassengerName] = useState("");
   return (

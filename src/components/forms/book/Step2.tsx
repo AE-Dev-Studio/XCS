@@ -20,7 +20,7 @@ const vehicles: Vehicle[] = [
     suitcases: 2,
     handLuggage: 2,
     price: "343.00",
-    image: "/images/business-class.jpg", // <-- real file or remote URL
+    image: "/assets/Form/business-class.png", // <-- real file or remote URL
   },
   {
     id: "first",
@@ -29,7 +29,7 @@ const vehicles: Vehicle[] = [
     suitcases: 2,
     handLuggage: 2,
     price: "535.00",
-    image: "/images/first-class.jpg",
+    image: "/assets/Form/first-class.png",
   },
   {
     id: "vclass",
@@ -38,7 +38,7 @@ const vehicles: Vehicle[] = [
     suitcases: 6,
     handLuggage: 6,
     price: "496.00",
-    image: "/images/v-class.jpg",
+    image: "/assets/Form/v-class.png",
   },
   {
     id: "coach",
@@ -47,7 +47,7 @@ const vehicles: Vehicle[] = [
     suitcases: 10,
     handLuggage: 10,
     price: "Price on Application",
-    image: "/images/coach.jpg",
+    image: "/assets/Form/coach.jpg",
   },
 ];
 
@@ -59,7 +59,7 @@ export default function Step2() {
   const [selectedVehicle, setSelectedVehicle] = useState<string>("business");
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-6 text-gray-800">
+    <div className="max-w-5xl mx-auto p-6 space-y-6 bg-black text-white">
       {/* Request Type */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -74,6 +74,11 @@ export default function Step2() {
                 value="booking"
                 checked={requestType === "booking"}
                 onChange={(e) => setRequestType(e.target.value as any)}
+                className="h-4 w-4 appearance-none rounded-full
+                border-2 border-[#a89447]
+                checked:bg-[#a89447] checked:scale-75
+                transition-transform
+                focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
               />
               Booking
             </label>
@@ -84,6 +89,11 @@ export default function Step2() {
                 value="quotation"
                 checked={requestType === "quotation"}
                 onChange={(e) => setRequestType(e.target.value as any)}
+                className="h-4 w-4 appearance-none rounded-full
+                border-2 border-[#a89447]
+                checked:bg-[#a89447] checked:scale-75
+                transition-transform
+                focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
               />
               Quotation
             </label>
@@ -97,7 +107,7 @@ export default function Step2() {
               Payment type
             </label>
             <select
-              className="w-full rounded-md border-gray-300 shadow-sm"
+              className="w-full rounded-md py-2 px-1 bg-black border-gray-300 shadow-sm"
               value={paymentType}
               onChange={(e) => setPaymentType(e.target.value)}
             >
@@ -119,21 +129,20 @@ export default function Step2() {
       {/* Type of Vehicle title */}
       <div>
         <h3 className="text-lg font-semibold">Type of vehicle</h3>
-        <p className="text-sm text-gray-500">Please select a vehicle</p>
+        <p className="text-sm text-white">Please select a vehicle</p>
       </div>
-
-      {/* Vehicle Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {vehicles.map((v) => (
           <label
             key={v.id}
             className={`relative rounded-xl border-2 p-4 cursor-pointer transition
-         ${
-           selectedVehicle === v.id
-             ? "border-indigo-600 ring-2 ring-indigo-100"
-             : "border-gray-200 hover:border-gray-300"
-         }`}
+        ${
+          selectedVehicle === v.id
+            ? "border-[#a89447] ring-2 ring-[#a89447]/20"
+            : "border-gray-500 hover:border-gray-300"
+        }`}
           >
+            {/* invisible radio */}
             <input
               type="radio"
               name="vehicle"
@@ -143,33 +152,31 @@ export default function Step2() {
               className="absolute inset-0 w-full h-full opacity-0"
             />
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              {/* --- IMAGE --- */}
-              <img
-                src={v.image}
-                alt={v.name}
-                className="w-full sm:w-40 h-24 object-cover rounded-lg"
-              />
+            {/* ---------- IMAGE ---------- */}
+            <img
+              src={v.image}
+              alt={v.name}
+              className="w-full h-32 object-cover rounded-lg"
+            />
 
-              {/* --- INFO --- */}
-              <div className="flex-1">
-                <div className="font-semibold text-gray-900">{v.name}</div>
-                <ul className="mt-2 space-y-1 text-sm text-gray-600">
-                  <li>Max passengers: {v.passengers}</li>
-                  <li>Max suitcases: {v.suitcases}</li>
-                  <li>Max hand luggage: {v.handLuggage}</li>
-                </ul>
-              </div>
+            {/* ---------- EVERYTHING UNDER THE IMAGE ---------- */}
+            <div className="mt-3 space-y-2">
+              <div className="font-semibold text-white">{v.name}</div>
 
-              {/* --- PRICE & CTA --- */}
-              <div className="text-right shrink-0">
-                <div className="text-2xl font-bold text-indigo-600">
+              <ul className="text-sm text-white space-y-1">
+                <li>Max passengers: {v.passengers}</li>
+                <li>Max suitcases: {v.suitcases}</li>
+                <li>Max hand luggage: {v.handLuggage}</li>
+              </ul>
+
+              <div className="flex items-center justify-between pt-2">
+                <span className="text-sm font-bold text-[#a89447]">
                   £{v.price}
-                </div>
+                </span>
                 <button
                   type="button"
-                  className="mt-2 inline-block rounded-md bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700"
                   onClick={() => setSelectedVehicle(v.id)}
+                  className="rounded-md bg-[#a89447] px-4 py-2 text-sm text-white hover:bg-[#a89447]/90"
                 >
                   Proceed
                 </button>
