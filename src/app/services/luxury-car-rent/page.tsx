@@ -17,7 +17,7 @@ const Page = () => {
       />
       <Resusablefleet />
       <Getaqoutesection
-        image="\assets\Luxury\3lamborghini-aventador-svj-roadster.jpeg"
+        image="/assets/Luxury/3lamborghini-aventador-svj-roadster.jpeg"
         heading="Luxury Car Rental in London - Your Memorable Journey Begins Here"
         paragraph="With CSS Chauffeurs, you can enjoy a smooth and stress-free experience as our professional chauffeurs handle all your transportation needs. Each vehicle is maintained to the highest standards, offering you the utmost reliability and sophistication. We cater to both short-term and long-term luxury car rentals, ensuring flexible packages that suit your needs."
       />
