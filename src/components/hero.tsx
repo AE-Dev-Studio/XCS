@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import CustomButton from "@/components/custombutton";
-import BookingForm from "./bookingform";
+import BookingForm from "./forms/bookingform";
 
 export default function HeroSection() {
   const formRef = useRef<HTMLDivElement>(null);

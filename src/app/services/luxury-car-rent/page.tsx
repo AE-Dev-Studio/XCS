@@ -6,7 +6,6 @@ import Resusablefleet from "@/components/services/subpagescomponents/resusablefl
 import Samecomponent from "@/components/services/subpagescomponents/samecomponent";
 import Sendmessagesection from "@/components/services/subpagescomponents/sendmessagesection";
 import TextImageSection from "@/components/services/subpagescomponents/textimagesection";
-
 const Page = () => {
   return (
     <>
@@ -32,6 +31,7 @@ const Page = () => {
         image="/assets/carinner.jpeg"
       />
       <MetricsBanner />
+
       <Samecomponent />
     </>
   );

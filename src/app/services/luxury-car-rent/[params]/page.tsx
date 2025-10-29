@@ -6,7 +6,7 @@ import MetricsBanner from "@/components/aboutpagecomponents/metricsbanner";
 import Samecomponent from "@/components/services/subpagescomponents/samecomponent";
 import { existsSync } from "fs";
 import { join } from "path";
-
+import QuoteForm from "@/components/forms/quoteform";
 function findLuxuryFile(base: string): string {
   const root = join(process.cwd(), "public", "assets", "Luxury");
   for (const ext of ["avif", "webp", "jpg", "jpeg", "png"]) {
@@ -43,6 +43,7 @@ export default async function Page({
         image={img3}
       />
       <MetricsBanner />
+      <QuoteForm />
       <Samecomponent />
     </>
   );

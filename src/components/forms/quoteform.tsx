@@ -1,0 +1,186 @@
+// components/QuoteTabs.tsx
+"use client";
+
+import { useState } from "react";
+
+type Tab = "self" | "driver";
+
+/* ---------- Reusable UI helpers ---------- */
+const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
+  <input
+    {...props}
+    className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+  />
+);
+
+const Select = ({
+  children,
+  ...props
+}: React.SelectHTMLAttributes<HTMLSelectElement>) => (
+  <div className="relative">
+    <select
+      {...props}
+      className="w-full appearance-none rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+    >
+      {children}
+    </select>
+    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+      <svg className="h-4 w-4" viewBox="0 0 571.4 571.4">
+        <path d="M571 393Q571 407 561 418L311 668Q300 679 286 679T261 668L11 418Q0 407 0 393T11 368 36 357H536Q550 357 561 368T571 393Z" />
+      </svg>
+    </div>
+  </div>
+);
+
+const TextArea = (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
+  <textarea
+    {...props}
+    rows={3}
+    className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+  />
+);
+
+export default function QuoteForm() {
+  const [tab, setTab] = useState<Tab>("self");
+
+  const vehicles = [
+    "Select a vehicle",
+    "Mercedes E Class",
+    "Mercedes S Class",
+    "Mercedes V Class",
+    "Rolls Royce Chullain",
+    "Rolls Royce Phantom",
+    "Rolls Royce Mybech",
+    "Range Rover",
+  ];
+
+  return (
+    <section className="mx-auto max-w-3xl rounded-lg bg-black p-6 my-5 shadow-lg z-10">
+      <h2 className="mb-6 text-center text-2xl font-semibold text-white">
+        Quote Now
+      </h2>
+
+      {/* Tabs */}
+      <div className="mb-6 flex justify-center gap-2">
+        {(["self", "driver"] as Tab[]).map((t) => (
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            className={`rounded-md px-6 py-2 text-sm font-medium capitalize transition ${
+              tab === t
+                ? "bg-[#a89447] text-white shadow"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            {t === "self" ? "Self" : "With Driver"}
+          </button>
+        ))}
+      </div>
+
+      {/* Self-drive form */}
+      {tab === "self" && (
+        <form className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Input name="name" placeholder="Name *" required />
+          <Input
+            type="tel"
+            name="phone"
+            placeholder="Phone *"
+            required
+            pattern="[0-9()#&+*-=.]+"
+          />
+          <Input type="email" name="email" placeholder="Email *" required />
+          <Select name="vehicle" required defaultValue="Select a vehicle">
+            {vehicles.map((v) => (
+              <option key={v}>{v}</option>
+            ))}
+          </Select>
+          <Input
+            type="date"
+            name="dateFrom"
+            placeholder="Date From *"
+            required
+          />
+          <Input type="date" name="dateTo" placeholder="Date To *" required />
+          <TextArea
+            name="message"
+            placeholder="Other Information"
+            className="md:col-span-2"
+          />
+          <button
+            type="submit"
+            className="md:col-span-2 w-full rounded-md bg-[#a89447] py-2 text-white hover:bg-[#a89447]"
+          >
+            Send
+          </button>
+        </form>
+      )}
+
+      {/* With-driver form */}
+      {tab === "driver" && (
+        <form className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Input name="name" placeholder="Name *" required />
+          <Input
+            type="tel"
+            name="phone"
+            placeholder="Phone *"
+            required
+            pattern="[0-9()#&+*-=.]+"
+          />
+          <Input type="email" name="email" placeholder="Email *" required />
+          <Select name="vehicle" required defaultValue="Select a vehicle">
+            {vehicles.map((v) => (
+              <option key={v}>{v}</option>
+            ))}
+          </Select>
+          <Input
+            type="date"
+            name="pickupDate"
+            placeholder="Pickup Date *"
+            required
+          />
+          <Input
+            type="time"
+            name="pickupTime"
+            placeholder="Pickup Time *"
+            required
+          />
+          <Input name="pickupAddress" placeholder="Pickup Address *" required />
+          <Input
+            name="dropoffAddress"
+            placeholder="Drop-off Address *"
+            required
+          />
+          <Input
+            type="date"
+            name="dropoffDate"
+            placeholder="Drop-off Date *"
+            required
+          />
+          <Input
+            type="time"
+            name="dropoffTime"
+            placeholder="Drop-off Time *"
+            required
+          />
+          <Input
+            name="occasion"
+            placeholder="Occasion"
+            required
+            className="md:col-span-2"
+          />
+          <TextArea
+            name="message"
+            placeholder="Other Information"
+            className="md:col-span-2"
+          />
+          <button
+            type="submit"
+            className="md:col-span-2 w-full rounded-md bg-[#a89447] py-2 text-white hover:bg-[#a89447]"
+          >
+            Send
+          </button>
+        </form>
+      )}
+    </section>
+  );
+}
