@@ -95,10 +95,10 @@ export default function Navbar() {
 
   return (
     <nav className="w-screen mx-auto px-4 py-2">
-      <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-white text-sm md:text-base">
+      <ul className="flex flex-wrap justify-center gap-x-4 md:gap-x-6 gap-y-2 text-white text-sm md:text-base">
         {navLinks.map((link) =>
           link.children ? (
-            <li key={link.label}>
+            <li key={link.label} className="relative isolate ">
               <Dropdown label={link.label} items={link.children} />
             </li>
           ) : (
