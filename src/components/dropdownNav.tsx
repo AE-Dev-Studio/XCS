@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useState, useRef } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { ChevronDownIcon } from "lucide-react";
@@ -23,10 +23,10 @@ export default function Dropdown({
 
   return (
     <Menu as="div" className="relative">
-      {/* Top-level label – real link */}
+      {/* Top-level label */}
       <Menu.Button
         as={Link}
-        href={items[0]?.href.replace(/\/[^/]+$/, "")} // /services
+        href={items[0]?.href.replace(/\/[^/]+$/, "")} // e.g. /services
         className="flex items-center gap-1 outline-none text-white hover:text-[#a89447]"
         onClick={(e) => {
           e.stopPropagation();
@@ -50,7 +50,7 @@ export default function Dropdown({
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items
-          className=" gpu-layer absolute left-0 mt-2 w-56 origin-top-right bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 focus:outline-none z-50"
+          className="gpu-layer absolute left-0 mt-2 w-56 origin-top-right bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 focus:outline-none z-50"
           onMouseEnter={() => setOpen(true)}
           onMouseLeave={() => setOpen(false)}
         >
@@ -81,90 +81,106 @@ export default function Dropdown({
   );
 }
 
-function NestedItem({
+const NestedItem = ({
   item,
   closeRoot,
 }: {
   item: Item;
   closeRoot: () => void;
-}) {
+}) => {
   const [show, setShow] = useState(false);
-  const nodeRef = useRef<HTMLDivElement>(null); // real DOM node
-
-  const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
-
-  /* desktop hover helpers */
+  const [isDesktop, setIsDesktop] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Detect viewport size
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const enter = () => {
     if (!isDesktop) return;
     if (timer.current) clearTimeout(timer.current);
     setShow(true);
   };
+
   const leave = () => {
     if (!isDesktop) return;
     timer.current = setTimeout(() => setShow(false), 60);
   };
 
-  /* mobile tap toggles */
-  const handleParentClick = (e: React.MouseEvent) => {
+  // Toggle dropdown for mobile when clicking the Chevron only
+  const handleChevronClick = (e: React.MouseEvent) => {
     if (isDesktop) return;
-    if (!show) {
-      e.preventDefault();
-      setShow(true);
-    }
+    e.preventDefault();
+    e.stopPropagation();
+    setShow((prev) => !prev);
   };
 
   return (
-    <div
-      ref={nodeRef}
+    <Menu.Item
+      as="div"
       onMouseEnter={enter}
       onMouseLeave={leave}
       className="relative"
     >
-      {/* Menu.Item is now a pure wrapper – ref is on the outer div */}
-      <Menu.Item>
-        {({ active }) => (
-          <Link
-            href={item.href}
-            className={`${
+      {({ active }) => (
+        <>
+          <div
+            className={`flex items-center justify-between px-4 py-2 text-sm text-white ${
               active ? "bg-black/20" : ""
-            } flex items-center justify-between px-4 py-2 text-sm text-white`}
-            onClick={(e) => {
-              if (isDesktop) closeRoot();
-              handleParentClick(e);
-            }}
+            }`}
           >
-            {item.label}
+            {/* Clicking the label navigates normally */}
+            <Link href={item.href} className="flex-1" onClick={closeRoot}>
+              {item.label}
+            </Link>
+
+            {/* Clicking Chevron toggles submenu on mobile */}
+            <button
+              onClick={handleChevronClick}
+              className="ml-2 flex-shrink-0 focus:outline-none md:hidden"
+            >
+              <ChevronDownIcon
+                className={`w-3 h-3 transition-transform ${
+                  show ? "rotate-0" : "-rotate-90"
+                }`}
+              />
+            </button>
+
+            {/* Desktop Chevron (not clickable, only visual) */}
             <ChevronDownIcon
-              className={`w-3 h-3 transition-transform ${
+              className={`hidden md:block w-3 h-3 transition-transform ${
                 show ? "rotate-0" : "-rotate-90"
               }`}
             />
-          </Link>
-        )}
-      </Menu.Item>
+          </div>
 
-      {/* sub panel – same as before */}
-      <div
-        className={`gpu-layer md:absolute md:left-full md:top-0 md:ml-0 md:w-60 md:h-80 bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 transition-all duration-200 ${
-          show
-            ? "max-h-screen opacity-100 pointer-events-auto"
-            : "max-h-0 opacity-0 pointer-events-none"
-        } overflow-hidden`}
-        onMouseEnter={enter}
-        onMouseLeave={leave}
-      >
-        {item.children!.map((sub) => (
-          <Link
-            key={sub.href}
-            href={sub.href}
-            className="block px-4 py-1 text-sm text-white hover:bg-black/20"
-            onClick={closeRoot}
+          {/* Submenu */}
+          <div
+            className={`gpu-layer md:absolute md:left-full md:top-0 md:ml-0 md:w-60 md:h-80 bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 transition-all duration-200 overflow-hidden ${
+              show
+                ? "max-h-screen opacity-100 pointer-events-auto"
+                : "max-h-0 opacity-0 pointer-events-none"
+            } ${!isDesktop ? "relative ml-4 mt-1 w-[90%]" : ""}`}
+            onMouseEnter={enter}
+            onMouseLeave={leave}
           >
-            {sub.label}
-          </Link>
-        ))}
-      </div>
-    </div>
+            {item.children!.map((sub) => (
+              <Link
+                key={sub.href}
+                href={sub.href}
+                className="block px-4 py-1 text-sm text-white hover:bg-black/20"
+                onClick={closeRoot}
+              >
+                {sub.label}
+              </Link>
+            ))}
+          </div>
+        </>
+      )}
+    </Menu.Item>
   );
-}
+};
