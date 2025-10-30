@@ -1,7 +1,7 @@
 "use client";
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import CustomButton from "../custombutton";
 import Navbar from "./Navbar";
 import { useEffect } from "react";
@@ -53,6 +53,7 @@ const Flag = () => (
 );
 
 function Nav() {
+  const router = useRouter();
   useEffect(() => {
     const header = document.querySelector("header");
     const handleScroll = () => {
@@ -85,7 +86,13 @@ function Nav() {
           />
         </Link>
         <div className="mt-4">
-          <CustomButton text="Book" variant="thin-green" />
+          <CustomButton
+            text="Book"
+            variant="thin-green"
+            onClick={() => {
+              router.push("/book");
+            }}
+          />
         </div>
       </div>
       {/* separator line */}
