@@ -17,7 +17,7 @@ const Page = () => {
       />
       <Resusablefleet />
       <Getaqoutesection
-        image="\assets\Luxury\3lamborghini-aventador-svj-roadster.jpeg"
+        image="/assets/Luxury/3lamborghini-aventador-svj-roadster.jpeg"
         heading="Exquisite Event Chauffeur Services in Manchester"
         paragraph="Experience the epitome of elegance with our event chauffeur services in Manchester. Whether it is a corporate function or a special celebration, our professional chauffeurs ensure a sophisticated and seamless journey. From precise logistics to luxurious vehicles, we take pride in delivering unparalleled service, making your event transportation a highlight of the occasion."
       />

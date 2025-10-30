@@ -2,19 +2,33 @@
 import React, { useState } from "react";
 import { Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner"
+
 const Footer: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Thank you! We will call you back soon.");
-    setFormData({ name: "", phone: "" });
-  };
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  try {
+    const res = await fetch("/api/footerform", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
+    if (res.ok) {
+      toast.success("Request Received! We'll call you back soon.");
+      setFormData({ name: "", phone: "" });
+    } else {
+      toast.error("Something went wrong. Please try again.");
+    }
+  } catch  {
+    toast.error("Network error. Please check your connection.");
+  }
+};
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,

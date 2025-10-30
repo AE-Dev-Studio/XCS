@@ -109,26 +109,64 @@ export default function BookingForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  //   if (validateForm()) {
+  //     console.log("Form submitted:", JSON.stringify(formData, null, 2));
+  //     setSubmitted(true);
+  //     // Reset form after 3 seconds
+  //     setTimeout(() => {
+  //       setFormData({
+  //         name: "",
+  //         phone: "",
+  //         email: "",
+  //         vehicle: "",
+  //         date: "",
+  //         pickUp: "",
+  //         destination: "",
+  //         otherInfo: "",
+  //       });
+  //       setSubmitted(false);
+  //     }, 3000);
+  //   }
+  // };
+
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log("Form submitted:", JSON.stringify(formData, null, 2));
-      setSubmitted(true);
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setFormData({
-          name: "",
-          phone: "",
-          email: "",
-          vehicle: "",
-          date: "",
-          pickUp: "",
-          destination: "",
-          otherInfo: "",
+      try {
+        const res = await fetch("/api/bookings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
         });
-        setSubmitted(false);
-      }, 3000);
+
+        if (!res.ok) throw new Error("Failed to send booking");
+
+        const result = await res.json();
+        console.log("✅ Booking saved:", result);
+
+        setSubmitted(true);
+        setTimeout(() => {
+          setFormData({
+            name: "",
+            phone: "",
+            email: "",
+            vehicle: "",
+            date: "",
+            pickUp: "",
+            destination: "",
+            otherInfo: "",
+          });
+          setSubmitted(false);
+        }, 3000);
+      } catch (error) {
+        console.error(error);
+        alert("Something went wrong. Please try again.");
+      }
     }
   };
 
@@ -172,9 +210,8 @@ export default function BookingForm() {
                 placeholder="Name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className={`${
-                  errors.name ? "border-red-500 focus-visible:ring-red-500" : ""
-                }`}
+                className={`${errors.name ? "border-red-500 focus-visible:ring-red-500" : ""
+                  }`}
                 aria-invalid={!!errors.name}
                 aria-describedby={errors.name ? "name-error" : undefined}
               />
@@ -197,11 +234,10 @@ export default function BookingForm() {
                 placeholder="Phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className={`${
-                  errors.phone
+                className={`${errors.phone
                     ? "border-red-500 focus-visible:ring-red-500"
                     : ""
-                }`}
+                  }`}
                 aria-invalid={!!errors.phone}
                 aria-describedby={errors.phone ? "phone-error" : undefined}
               />
@@ -226,11 +262,10 @@ export default function BookingForm() {
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`${
-                  errors.email
+                className={`${errors.email
                     ? "border-red-500 focus-visible:ring-red-500"
                     : ""
-                }`}
+                  }`}
                 aria-invalid={!!errors.email}
                 aria-describedby={errors.email ? "email-error" : undefined}
               />
@@ -249,11 +284,10 @@ export default function BookingForm() {
               >
                 <SelectTrigger
                   id="vehicle"
-                  className={`${
-                    errors.vehicle
+                  className={`${errors.vehicle
                       ? "border-red-500 focus-visible:ring-red-500"
                       : ""
-                  }`}
+                    }`}
                   aria-invalid={!!errors.vehicle}
                   aria-describedby={
                     errors.vehicle ? "vehicle-error" : undefined
@@ -302,9 +336,8 @@ export default function BookingForm() {
               type="date"
               value={formData.date}
               onChange={handleInputChange}
-              className={`${
-                errors.date ? "border-red-500 focus-visible:ring-red-500" : ""
-              }`}
+              className={`${errors.date ? "border-red-500 focus-visible:ring-red-500" : ""
+                }`}
               aria-invalid={!!errors.date}
               aria-describedby={errors.date ? "date-error" : undefined}
             />
@@ -328,11 +361,10 @@ export default function BookingForm() {
                 placeholder="Pick-up"
                 value={formData.pickUp}
                 onChange={handleInputChange}
-                className={`${
-                  errors.pickUp
+                className={`${errors.pickUp
                     ? "border-red-500 focus-visible:ring-red-500"
                     : ""
-                }`}
+                  }`}
                 aria-invalid={!!errors.pickUp}
                 aria-describedby={errors.pickUp ? "pickUp-error" : undefined}
               />

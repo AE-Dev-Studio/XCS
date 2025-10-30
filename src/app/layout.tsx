@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/nav/Nav";
 import Footer from "@/components/footer/footer";
+import { Toaster } from "sonner";
 export const metadata: Metadata = {
   title: "Luxury Chaffeur Service",
   description: "Luxury Chaffeur Service",
@@ -18,6 +19,7 @@ export default function RootLayout({
         <Nav />
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   );
