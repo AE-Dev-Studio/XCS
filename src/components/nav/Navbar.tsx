@@ -66,7 +66,7 @@ const FLEET: { label: string; href: string }[] = [
 export default function Navbar() {
   const router = usePathname();
   const navLinks = [
-    { label: "Home", href: "/home" },
+    { label: "Home", href: "/" },
     { label: "About Us", href: "/about-us" },
     {
       label: "Services",
