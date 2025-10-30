@@ -3,7 +3,7 @@
 import { atom } from "jotai";
 
 /* ---------- enums / types ---------- */
-export type Service = "airport" | "cruise" | "hourly" | "-";
+export type Service = "airport" | "cruise" | "hourly" | "booking" | "quotation" | "-";
 export type TripType = "one-way" | "return" | "-";
 export type FlightType = "arrival" | "departure" | "-";
 

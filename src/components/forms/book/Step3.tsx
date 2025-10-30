@@ -107,7 +107,7 @@ export default function Step3() {
           icon={<Smartphone className="h-4 w-4" />}
           placeholder=""
           value={booking.phone} // fallback
-          onChange={(e) => set("mobile", e.target.value)}
+          onChange={(e) => set("phone", e.target.value)}
         />
       </Row>
 

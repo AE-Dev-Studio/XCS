@@ -17,7 +17,7 @@ const Widget = ({
   title,
   subtitle,
 }: {
-  icon: React.ReactNode;
+  icon: React.ReactElement<{ className?: string }>;
   bg: string;
   title: string;
   subtitle: string;
@@ -27,7 +27,7 @@ const Widget = ({
       <div
         className={`${bg} text-white w-1/3 flex items-center justify-center py-6`}
       >
-        {React.cloneElement(icon as React.ReactElement, {
+        {React.cloneElement(icon, {
           className: "w-8 h-8 text-white",
         })}
       </div>
