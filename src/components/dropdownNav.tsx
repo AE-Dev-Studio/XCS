@@ -4,11 +4,7 @@ import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { ChevronDownIcon } from "lucide-react";
 
-export type Item = {
-  label: string;
-  href: string;
-  children?: Item[];
-};
+export type Item = { label: string; href: string; children?: Item[] };
 
 export default function Dropdown({
   label,
@@ -18,25 +14,40 @@ export default function Dropdown({
   items: Item[];
 }) {
   const [open, setOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const close = () => setOpen(false);
 
+  const handleClick = (e: React.MouseEvent) => {
+    if (!isDesktop) {
+      e.preventDefault();
+      setOpen((prev) => !prev);
+    }
+  };
+
   return (
     <Menu as="div" className="relative">
-      {/* Top-level label */}
       <Menu.Button
-        as={Link}
-        href={items[0]?.href.replace(/\/[^/]+$/, "")} // e.g. /services
+        as={isDesktop ? Link : "button"}
+        href={isDesktop ? items[0]?.href.replace(/\/[^/]+$/, "") : undefined}
         className="flex items-center gap-1 outline-none text-white hover:text-[#a89447]"
-        onClick={(e) => {
-          e.stopPropagation();
-          close();
-        }}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
+        onClick={handleClick}
+        onMouseEnter={() => isDesktop && setOpen(true)}
+        onMouseLeave={() => isDesktop && setOpen(false)}
       >
         {label}
-        <ChevronDownIcon className="w-4 h-4" />
+        <ChevronDownIcon
+          className={`w-4 h-4 transition-transform ${
+            open ? "rotate-0" : "-rotate-90"
+          }`}
+        />
       </Menu.Button>
 
       <Transition
@@ -50,9 +61,14 @@ export default function Dropdown({
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items
-          className="gpu-layer absolute left-0 mt-2 w-56 origin-top-right bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 focus:outline-none z-50"
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
+          className={`gpu-layer absolute z-50 mt-2 bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 focus:outline-none
+            ${
+              isDesktop
+                ? "left-0 w-56 origin-top-right"
+                : "fixed left-0 right-0 top-auto mt-1 w-[40%] px-4"
+            }`}
+          onMouseEnter={() => isDesktop && setOpen(true)}
+          onMouseLeave={() => isDesktop && setOpen(false)}
         >
           <div className="py-1">
             {items.map((item) =>
@@ -81,18 +97,16 @@ export default function Dropdown({
   );
 }
 
-const NestedItem = ({
+function NestedItem({
   item,
   closeRoot,
 }: {
   item: Item;
   closeRoot: () => void;
-}) => {
+}) {
   const [show, setShow] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Detect viewport size
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
     handleResize();
@@ -101,86 +115,70 @@ const NestedItem = ({
   }, []);
 
   const enter = () => {
-    if (!isDesktop) return;
-    if (timer.current) clearTimeout(timer.current);
-    setShow(true);
+    if (isDesktop) setShow(true);
   };
-
   const leave = () => {
-    if (!isDesktop) return;
-    timer.current = setTimeout(() => setShow(false), 60);
+    if (isDesktop) setTimeout(() => setShow(false), 60);
   };
 
-  // Toggle dropdown for mobile when clicking the Chevron only
-  const handleChevronClick = (e: React.MouseEvent) => {
-    if (isDesktop) return;
-    e.preventDefault();
-    e.stopPropagation();
-    setShow((prev) => !prev);
+  const handleClick = (e: React.MouseEvent) => {
+    if (!isDesktop) {
+      e.preventDefault();
+      e.stopPropagation();
+      setShow((prev) => !prev);
+    }
   };
 
   return (
-    <Menu.Item
-      as="div"
-      onMouseEnter={enter}
-      onMouseLeave={leave}
-      className="relative"
-    >
+    <Menu.Item>
       {({ active }) => (
-        <>
-          <div
-            className={`flex items-center justify-between px-4 py-2 text-sm text-white ${
+        <div
+          className={`relative ${
+            !isDesktop ? "w-full flex flex-col gap-1" : ""
+          }`}
+          onMouseEnter={enter}
+          onMouseLeave={leave}
+        >
+          <button
+            onClick={handleClick}
+            className={`flex w-full items-center justify-between px-4 py-2 text-sm text-white rounded-md ${
               active ? "bg-black/20" : ""
             }`}
           >
-            {/* Clicking the label navigates normally */}
-            <Link href={item.href} className="flex-1" onClick={closeRoot}>
-              {item.label}
-            </Link>
-
-            {/* Clicking Chevron toggles submenu on mobile */}
-            <button
-              onClick={handleChevronClick}
-              className="ml-2 flex-shrink-0 focus:outline-none md:hidden"
-            >
-              <ChevronDownIcon
-                className={`w-3 h-3 transition-transform ${
-                  show ? "rotate-0" : "-rotate-90"
-                }`}
-              />
-            </button>
-
-            {/* Desktop Chevron (not clickable, only visual) */}
+            <span>{item.label}</span>
             <ChevronDownIcon
-              className={`hidden md:block w-3 h-3 transition-transform ${
+              className={`w-3 h-3 transition-transform ${
                 show ? "rotate-0" : "-rotate-90"
               }`}
             />
-          </div>
+          </button>
 
-          {/* Submenu */}
           <div
-            className={`gpu-layer md:absolute md:left-full md:top-0 md:ml-0 md:w-60 md:h-80 bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 transition-all duration-200 overflow-hidden ${
-              show
-                ? "max-h-screen opacity-100 pointer-events-auto"
-                : "max-h-0 opacity-0 pointer-events-none"
-            } ${!isDesktop ? "relative ml-4 mt-1 w-[90%]" : ""}`}
-            onMouseEnter={enter}
-            onMouseLeave={leave}
+            className={`gpu-layer md:absolute md:left-full md:top-0 md:w-60 bg-black/90 backdrop-blur rounded-md shadow-lg ring-1 ring-[#a89447] ring-opacity-5 transition-all duration-200 overflow-hidden
+              ${
+                show
+                  ? "max-h-screen opacity-100 pointer-events-auto"
+                  : "max-h-0 opacity-0 pointer-events-none"
+              }
+              ${
+                isDesktop
+                  ? "absolute"
+                  : "relative ml-4 w-[calc(100%-1rem)] mt-1 flex flex-col gap-1"
+              }`}
           >
             {item.children!.map((sub) => (
               <Link
                 key={sub.href}
                 href={sub.href}
-                className="block px-4 py-1 text-sm text-white hover:bg-black/20"
+                className="block px-4 py-2 text-sm text-white hover:bg-black/20 rounded-md"
                 onClick={closeRoot}
               >
                 {sub.label}
               </Link>
             ))}
           </div>
-        </>
+        </div>
       )}
     </Menu.Item>
   );
-};
+}
