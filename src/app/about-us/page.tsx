@@ -21,7 +21,6 @@ const Aboutus = () => {
       <WhyChooseUsSection />
       <MetricsBanner />
       <XclusiveChauffers />
-      <Footer />
     </>
   );
 };
