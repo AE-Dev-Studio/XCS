@@ -287,7 +287,6 @@ export default function Step1() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(booking.service, booking.tripType, booking.pickupAirport);
   };
 
   return (
@@ -299,7 +298,7 @@ export default function Step1() {
 
       {/* Service type */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        {(["airport", "cruise", "hourly"] as const).map((s) => (
+        {(["airport", "hourly"] as const).map((s) => (
           <label key={s} className="flex items-center gap-2">
             <input
               type="radio"
