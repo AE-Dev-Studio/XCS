@@ -1,15 +1,9 @@
-import React, { useState } from "react";
-import {
-  Phone,
-  Smartphone,
-  Mail,
-  Search,
-  Plane,
-  Plus,
-  Minus,
-} from "lucide-react";
+"use client";
 
-/* ---------- tiny reusable atoms ---------- */
+import { useAtom, useAtomValue } from "jotai";
+import { bookingAtom, updateBookingAtom } from "@/atoms/booking";
+import { Phone, Smartphone, Mail, Plane, Plus, Minus } from "lucide-react";
+import { useState } from "react";
 const Row: React.FC<{ label: string; children: React.ReactNode }> = ({
   label,
   children,
@@ -52,7 +46,7 @@ const NumberSpinner: React.FC<{
     <button
       type="button"
       onClick={() => onChange(Math.max(min, value - 1))}
-      className="rounded p-1 hover:bg-gray-500"
+      className="rounded p-1 hover:bg-gray-200"
       aria-label="Decrement"
     >
       <Minus className="h-4 w-4" />
@@ -61,7 +55,7 @@ const NumberSpinner: React.FC<{
     <button
       type="button"
       onClick={() => onChange(Math.min(max, value + 1))}
-      className="rounded p-1 hover:bg-gray-500"
+      className="rounded p-1 hover:bg-gray-200"
       aria-label="Increment"
     >
       <Plus className="h-4 w-4" />
@@ -70,27 +64,30 @@ const NumberSpinner: React.FC<{
 );
 
 /* ---------- main component ---------- */
-const Step3: React.FC = () => {
-  /* ---- local state ---- */
-  const [passengers, setPassengers] = useState(1);
-  const [childSeats, setChildSeats] = useState(0);
-  const [boosterSeats, setBoosterSeats] = useState(0);
-  const [suitcases, setSuitcases] = useState("");
-  const [handLuggage, setHandLuggage] = useState("");
+export default function Step3() {
+  const booking = useAtomValue(bookingAtom);
+  const [, update] = useAtom(updateBookingAtom);
 
+  /* local UI flags */
   const [bookingElse, setBookingElse] = useState(false);
   const [moreFlight, setMoreFlight] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
-  const [passengerName, setPassengerName] = useState("");
+
+  /* helper to update atom */
+  const set = <K extends keyof typeof booking>(
+    key: K,
+    val: (typeof booking)[K]
+  ) => update({ [key]: val });
+
   return (
     <div className="rounded-lg bg-white text-gray-700 p-6 shadow">
+      {/* ---------- core passenger fields ---------- */}
       <Row label="Name">
-        <input
+        <InputGroup
           type="text"
-          value={passengerName}
-          onChange={(e) => setPassengerName(e.target.value)}
           placeholder="Type passenger name"
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 focus:border-[#a89447] focus:outline-none"
+          value={booking.name}
+          onChange={(e) => set("name", e.target.value)}
         />
       </Row>
 
@@ -99,6 +96,8 @@ const Step3: React.FC = () => {
           type="tel"
           icon={<Phone className="h-4 w-4" />}
           placeholder=""
+          value={booking.phone}
+          onChange={(e) => set("phone", e.target.value)}
         />
       </Row>
 
@@ -107,6 +106,8 @@ const Step3: React.FC = () => {
           type="tel"
           icon={<Smartphone className="h-4 w-4" />}
           placeholder=""
+          value={booking.phone} // fallback
+          onChange={(e) => set("mobile", e.target.value)}
         />
       </Row>
 
@@ -115,66 +116,41 @@ const Step3: React.FC = () => {
           type="email"
           icon={<Mail className="h-4 w-4" />}
           placeholder="ex: myname@example.com"
+          value={booking.email}
+          onChange={(e) => set("email", e.target.value)}
         />
       </Row>
 
-      <hr className="my-6" />
-
-      {/* ---------- numbers ---------- */}
-      <Row label="No. of passengers">
+      {/* ---------- passenger counts ---------- */}
+      <Row label="Passengers">
         <NumberSpinner
-          value={passengers}
-          min={1}
-          max={20}
-          onChange={setPassengers}
+          value={booking.passengers}
+          onChange={(v) => set("passengers", v)}
+        />
+      </Row>
+
+      <Row label="Suitcases">
+        <NumberSpinner
+          value={booking.luggage}
+          onChange={(v) => set("luggage", v)}
         />
       </Row>
 
       <Row label="Child seats">
         <NumberSpinner
-          value={childSeats}
-          min={0}
-          max={5}
-          onChange={setChildSeats}
+          value={booking.childSeats}
+          onChange={(v) => set("childSeats", v)}
         />
       </Row>
 
       <Row label="Booster seats">
         <NumberSpinner
-          value={boosterSeats}
-          min={0}
-          max={5}
-          onChange={setBoosterSeats}
+          value={booking.boosterSeats}
+          onChange={(v) => set("boosterSeats", v)}
         />
       </Row>
 
-      <Row label="Suitcases">
-        <div className="flex gap-2">
-          <InputGroup
-            type="text"
-            placeholder="ex: 2"
-            value={suitcases}
-            onChange={(e) => setSuitcases(e.target.value)}
-            className="max-w-[6rem] py-1 px-1"
-          />
-          <span className="self-center text-sm text-gray-600">case(s)</span>
-        </div>
-      </Row>
-
-      <Row label="Hand luggage">
-        <div className="flex gap-2">
-          <InputGroup
-            type="text"
-            placeholder="ex: 2"
-            value={handLuggage}
-            onChange={(e) => setHandLuggage(e.target.value)}
-            className="max-w-[6rem] px-1 py-1"
-          />
-          <span className="self-center text-sm text-gray-600">
-            hand luggage(s)
-          </span>
-        </div>
-      </Row>
+      <hr className="my-6" />
 
       {/* ---------- booking for someone else ---------- */}
       <div className="mb-4 flex items-center gap-2">
@@ -196,11 +172,20 @@ const Step3: React.FC = () => {
       {bookingElse && (
         <>
           <Row label="Booked by">
-            <input className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-[#a89447] focus:outline-none"></input>
+            <InputGroup
+              placeholder=""
+              value={booking.bookedBy || ""}
+              onChange={(e) => set("bookedBy", e.target.value)}
+            />
           </Row>
 
           <Row label="Booker mobile">
-            <InputGroup type="tel" icon={<Smartphone className="h-4 w-4" />} />
+            <InputGroup
+              type="tel"
+              icon={<Smartphone className="h-4 w-4" />}
+              value={booking.bookedByMobile}
+              onChange={(e) => set("bookedByMobile", e.target.value)}
+            />
           </Row>
 
           <Row label="Booker email">
@@ -208,12 +193,14 @@ const Step3: React.FC = () => {
               type="email"
               icon={<Mail className="h-4 w-4" />}
               placeholder="ex: myname@example.com"
+              value={booking.bookedByEmail || booking.email}
+              onChange={(e) => set("bookedByEmail", e.target.value)}
             />
           </Row>
         </>
       )}
 
-      {/* ---------- flight ---------- */}
+      {/* ---------- flight details ---------- */}
       <hr className="my-6" />
 
       <Row label="Flight/tail number">
@@ -221,9 +208,10 @@ const Step3: React.FC = () => {
           <InputGroup
             type="text"
             placeholder="ex: BA 123"
-            className="uppercase py-1 px-1"
+            className="uppercase"
+            value={booking.flightNumber}
+            onChange={(e) => set("flightNumber", e.target.value.toUpperCase())}
           />
-
           <div className="flex items-center gap-2">
             <input
               id="more-flight"
@@ -245,7 +233,12 @@ const Step3: React.FC = () => {
       {moreFlight && (
         <>
           <Row label="Airline">
-            <select className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-[#a89447] focus:outline-none">
+            <select
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-[#a89447] focus:outline-none"
+              value={booking.flightAirline}
+              onChange={(e) => set("flightAirline", e.target.value)}
+            >
+              <option value="">Select airline</option>
               <option>Emirates</option>
               <option>British Airways</option>
               <option>Easyjet</option>
@@ -256,28 +249,41 @@ const Step3: React.FC = () => {
             <InputGroup
               type="time"
               icon={<Plane className="h-4 w-4" />}
-              placeholder=""
+              value={booking.flightTime}
+              onChange={(e) => set("flightTime", e.target.value)}
             />
           </Row>
 
           <Row label="Arriving into">
-            <InputGroup type="text" placeholder="" />
+            <InputGroup
+              type="text"
+              value={booking.flightTerminal}
+              onChange={(e) => set("flightTerminal", e.target.value)}
+            />
           </Row>
 
           <Row label="Flying from">
-            <select className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+            <select
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-[#a89447] focus:outline-none"
+              value={booking.flightFrom}
+              onChange={(e) => set("flightFrom", e.target.value)}
+            >
+              <option value="">Select airport</option>
               <option>Paris Charles de Gaulle Airport</option>
               <option>London Heathrow Airport</option>
             </select>
           </Row>
 
           <Row label="Meeting point">
-            <input className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-[#a89447] focus:outline-none"></input>
+            <InputGroup
+              value={booking.meetingPoint}
+              onChange={(e) => set("meetingPoint", e.target.value)}
+            />
           </Row>
         </>
       )}
 
-      {/* ---------- additional booking info ---------- */}
+      {/* ---------- additional info ---------- */}
       <hr className="my-6" />
 
       <div className="mb-4 flex items-center gap-2">
@@ -299,15 +305,24 @@ const Step3: React.FC = () => {
       {moreInfo && (
         <>
           <Row label="Customer name">
-            <InputGroup type="text" />
+            <InputGroup
+              value={booking.customerName || ""}
+              onChange={(e) => set("customerName", e.target.value)}
+            />
           </Row>
 
           <Row label="Customer ref">
-            <InputGroup type="text" />
+            <InputGroup
+              value={booking.customerRef || ""}
+              onChange={(e) => set("customerRef", e.target.value)}
+            />
           </Row>
 
           <Row label="Cost centre">
-            <InputGroup type="text" />
+            <InputGroup
+              value={booking.costCentre || ""}
+              onChange={(e) => set("costCentre", e.target.value)}
+            />
           </Row>
 
           <Row label="Instructions">
@@ -315,13 +330,15 @@ const Step3: React.FC = () => {
               rows={3}
               className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 focus:border-[#a89447] focus:outline-none"
               maxLength={500}
+              value={booking.notes}
+              onChange={(e) => set("notes", e.target.value)}
             />
-            <div className="mt-1 text-right text-xs text-gray-500">0 / 500</div>
+            <div className="mt-1 text-right text-xs text-gray-500">
+              {booking.notes.length} / 500
+            </div>
           </Row>
         </>
       )}
     </div>
   );
-};
-
-export default Step3;
+}

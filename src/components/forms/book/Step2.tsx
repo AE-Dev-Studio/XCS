@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { bookingAtom, updateBookingAtom } from "@/atoms/booking"; // adjust path
 
 type Vehicle = {
   id: string;
@@ -20,7 +21,7 @@ const vehicles: Vehicle[] = [
     suitcases: 2,
     handLuggage: 2,
     price: "343.00",
-    image: "/assets/Form/business-class.png", // <-- real file or remote URL
+    image: "/assets/Form/business-class.png",
   },
   {
     id: "first",
@@ -52,11 +53,14 @@ const vehicles: Vehicle[] = [
 ];
 
 export default function Step2() {
-  const [requestType, setRequestType] = useState<"booking" | "quotation">(
-    "booking"
-  );
-  const [paymentType, setPaymentType] = useState<string>("");
-  const [selectedVehicle, setSelectedVehicle] = useState<string>("business");
+  const booking = useAtomValue(bookingAtom);
+  const [, update] = useAtom(updateBookingAtom);
+
+  /* helper to keep code short */
+  const onChange = <K extends keyof typeof booking>(
+    key: K,
+    val: (typeof booking)[K]
+  ) => update({ [key]: val });
 
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-6 bg-white text-black">
@@ -67,49 +71,32 @@ export default function Step2() {
             Request type
           </label>
           <div className="flex gap-4">
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="requestType"
-                value="booking"
-                checked={requestType === "booking"}
-                onChange={(e) => setRequestType(e.target.value as any)}
-                className="h-4 w-4 appearance-none rounded-full
-                border-2 border-[#a89447]
-                checked:bg-[#a89447] checked:scale-75
-                transition-transform
-                focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
-              />
-              Booking
-            </label>
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="requestType"
-                value="quotation"
-                checked={requestType === "quotation"}
-                onChange={(e) => setRequestType(e.target.value as any)}
-                className="h-4 w-4 appearance-none rounded-full
-                border-2 border-[#a89447]
-                checked:bg-[#a89447] checked:scale-75
-                transition-transform
-                focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
-              />
-              Quotation
-            </label>
+            {(["booking", "quotation"] as const).map((t) => (
+              <label key={t} className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="requestType"
+                  value={t}
+                  checked={booking.seq === t}
+                  onChange={() => onChange("service", t)}
+                  className="h-4 w-4 appearance-none rounded-full border-2 border-[#a89447] checked:bg-[#a89447] checked:scale-75 transition-transform focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
+                />
+                <span className="capitalize">{t}</span>
+              </label>
+            ))}
           </div>
         </div>
 
         {/* Payment Type (hidden for quotation) */}
-        {requestType === "booking" && (
+        {booking.service === "booking" && (
           <div>
             <label className="block text-sm font-semibold mb-2">
               Payment type
             </label>
             <select
               className="w-full rounded-md py-2 px-1 bg-white border-gray-300 shadow-sm"
-              value={paymentType}
-              onChange={(e) => setPaymentType(e.target.value)}
+              value={booking.paymentType}
+              onChange={(e) => onChange("paymentType", e.target.value)}
             >
               <option value="" disabled>
                 Select a payment type
@@ -126,43 +113,40 @@ export default function Step2() {
         )}
       </div>
 
-      {/* Type of Vehicle title */}
+      {/* Vehicle selection */}
       <div>
         <h3 className="text-lg font-semibold">Type of vehicle</h3>
         <p className="text-sm text-gray-700">Please select a vehicle</p>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {vehicles.map((v) => (
           <label
             key={v.id}
             className={`relative rounded-xl border-2 p-4 cursor-pointer transition
-        ${
-          selectedVehicle === v.id
-            ? "border-[#a89447] ring-2 ring-[#a89447]/20"
-            : "border-gray-500 hover:border-gray-300"
-        }`}
+              ${
+                booking.vehicleClass === v.name
+                  ? "border-[#a89447] ring-2 ring-[#a89447]/20"
+                  : "border-gray-500 hover:border-gray-300"
+              }`}
           >
-            {/* invisible radio */}
             <input
               type="radio"
               name="vehicle"
               value={v.id}
-              checked={selectedVehicle === v.id}
-              onChange={() => setSelectedVehicle(v.id)}
+              checked={booking.vehicleClass === v.name}
+              onChange={() => onChange("vehicleClass", v.name)}
               className="absolute inset-0 w-full h-full opacity-0"
             />
 
-            {/* ---------- IMAGE ---------- */}
             <img
               src={v.image}
               alt={v.name}
               className="w-full h-32 object-cover rounded-lg"
             />
 
-            {/* ---------- EVERYTHING UNDER THE IMAGE ---------- */}
             <div className="mt-3 space-y-2">
               <div className="font-semibold text-gray-700">{v.name}</div>
-
               <ul className="text-sm text-gray-700 space-y-1">
                 <li>Max passengers: {v.passengers}</li>
                 <li>Max suitcases: {v.suitcases}</li>
@@ -175,7 +159,7 @@ export default function Step2() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => setSelectedVehicle(v.id)}
+                  onClick={() => onChange("vehicleClass", v.name)}
                   className="rounded-md bg-[#a89447] px-4 py-2 text-sm text-white hover:bg-[#a89447]/90"
                 >
                   Proceed

@@ -1,29 +1,23 @@
-// app/confirmation/page.tsx
 "use client";
-
+import { useAtomValue } from "jotai";
+import { bookingAtom } from "@/atoms/booking"; // <-- path to the atom file you posted
+import { MapPinCheckInside, Car, User } from "lucide-react";
 import React from "react";
 
-/* ------------------------------------------------------------------ */
-/* Helper: icon                                                                 */
-/* ------------------------------------------------------------------ */
-const Icon = ({
-  className = "",
-  name,
-}: {
-  className?: string;
-  name: string;
-}) => <i className={`fa ${name} ${className}`} aria-hidden="true" />;
-
-/* ------------------------------------------------------------------ */
-/* Re-usable “widget” panel used for Journey, Vehicle, Passenger               */
-/* ------------------------------------------------------------------ */
+const extractAirportName = (raw: string) => {
+  if (!raw) return "—";
+  // last segment after the final '|'
+  const parts = raw.split("|");
+  return parts[parts.length - 2] || "—"; // e.g. "Durham Tees Valley (MME)"
+};
+/* ---------- Re-usable widget (Lucide version) ---------- */
 const Widget = ({
   icon,
   bg,
   title,
   subtitle,
 }: {
-  icon: string;
+  icon: React.ReactNode;
   bg: string;
   title: string;
   subtitle: string;
@@ -33,7 +27,9 @@ const Widget = ({
       <div
         className={`${bg} text-white w-1/3 flex items-center justify-center py-6`}
       >
-        <Icon name={icon} className="text-3xl" />
+        {React.cloneElement(icon as React.ReactElement, {
+          className: "w-8 h-8 text-white",
+        })}
       </div>
       <div className="w-2/3 p-4 flex flex-col items-center justify-center">
         <h4 className="text-lg font-semibold text-gray-800">{title}</h4>
@@ -45,52 +41,46 @@ const Widget = ({
   </div>
 );
 
-/* ------------------------------------------------------------------ */
-/* Main page                                                                    */
-/* ------------------------------------------------------------------ */
-export default function Step4() {
-  /* ------------------------------------------------------ */
-  /* All hard-coded data mirrors the HTML you supplied       */
-  /* Replace with dynamic props / fetch as required          */
-  /* ------------------------------------------------------ */
+export default function ConfirmationPage() {
+  const booking = useAtomValue(bookingAtom);
+
   const journey = {
-    type: "Airport Transfer",
-    pickup:
-      "Inverness (INV) Inverness Airport Dalcross Inverness Inverness-shire IV2 7JB",
-    destination: "United Kingdom",
-    dateTime: "24-Oct-2025 10:50 AM",
+    type: booking.tripType,
+    pickup: extractAirportName(booking.pickupAirport),
+    destination: booking.destination,
+    dateTime: `${booking.pickupDate} ${booking.pickupTime}`,
   };
 
   const passenger = {
-    name: "Abdullah",
-    phone: "033030303",
-    mobile: "030303033",
-    email: "tester@gmail.com",
-    passengers: 1,
-    childSeats: 0,
-    boosterSeats: 0,
-    suitcases: 0,
+    name: booking.name,
+    phone: booking.phone,
+    //mobile: booking.mobile,
+    email: booking.email,
+    passengers: booking.passengers,
+    childSeats: booking.childSeats,
+    boosterSeats: booking.boosterSeats,
+    suitcases: booking.luggage,
     handLuggage: 0,
   };
 
   const flight = {
-    type: "Arrival",
-    airport: "Inverness (INV)",
+    type: booking.flightType === "arrival" ? "Arrival" : "Departure",
+    airport: booking.flightAirport,
   };
 
   const payment = {
-    type: "Credit Card",
-    amount: "£ 475.00",
-    bookedBy: "Abdullah",
-    bookedByMobile: "030303033",
-    bookedByEmail: "tester@gmail.com",
+    type: booking.paymentType,
+    amount: `£ ${booking.amount}`,
+    bookedBy: booking.name,
+    bookedByMobile: booking.phone,
+    bookedByEmail: booking.email,
   };
 
   return (
     <main className="max-w-7xl mx-auto p-6">
       <fieldset className="border border-gray-300 rounded p-4">
         <legend className="text-lg font-semibold text-gray-700 flex items-center gap-2 px-2">
-          <Icon name="fa-check-square-o" />
+          <User className="w-5 h-5" />
           Confirmation
         </legend>
 
@@ -100,57 +90,40 @@ export default function Step4() {
             whether you wish to proceed with this transaction.
           </p>
 
-          {/* Top row of widgets ------------------------------------ */}
+          {/* ---------- 3 WIDGETS ---------- */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Widget
-              icon="fa-road"
+              icon={<MapPinCheckInside />}
               bg="bg-green-500"
               title={journey.type}
               subtitle="Journey"
             />
             <Widget
-              icon="fa-car"
+              icon={<Car />}
               bg="bg-gray-800"
-              title="Business Class"
+              title={booking.vehicleClass}
               subtitle="Vehicle"
             />
             <Widget
-              icon="glyphicon-user"
+              icon={<User />}
               bg="bg-purple-600"
               title={passenger.name}
               subtitle="Passenger"
             />
           </div>
 
-          {/* Journey & Passenger panels --------------------------- */}
+          {/* Journey & Passenger panels */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            {/* Journey details */}
             <Panel title="Journey details">
               <Row label="Type" value={journey.type} />
               <Row label="Time" value={journey.dateTime} />
               <Row label="Pickup" value={journey.pickup} />
-              <Row
-                label="Destination"
-                value={
-                  <>
-                    {journey.destination}
-                    <button
-                      aria-label="Edit destination"
-                      className="ml-2 text-gray-500 hover:text-gray-700"
-                    >
-                      <Icon name="fa-pencil" />
-                    </button>
-                  </>
-                }
-              />
+              <Row label="Destination" value={journey.destination} />
             </Panel>
 
-            {/* Passenger details */}
             <Panel title="Passenger details">
-              <SectionLabel>Outward journey</SectionLabel>
               <Row label="Name" value={passenger.name} />
               <Row label="Phone" value={passenger.phone} />
-              <Row label="Mobile" value={passenger.mobile} />
               <Row label="Email" value={passenger.email} />
               <Row label="No. of passengers" value={passenger.passengers} />
               <Row label="Child seats" value={passenger.childSeats} />
@@ -160,7 +133,7 @@ export default function Step4() {
             </Panel>
           </div>
 
-          {/* Flight details --------------------------------------- */}
+          {/* Flight details */}
           <div className="mt-6">
             <Panel title="Flight details" centerTitle>
               <SectionLabel>Outward journey</SectionLabel>
@@ -168,37 +141,47 @@ export default function Step4() {
                 <div className="space-y-2">
                   <Row label="Type" value={flight.type} />
                   <Row label="Airport" value={flight.airport} />
-                  <Row label="Time" value="—" />
-                  <Row label="Airline" value="—" />
+                  <Row label="Time" value={booking.flightTime || "—"} />
+                  <Row label="Airline" value={booking.flightAirline || "—"} />
                 </div>
                 <div className="space-y-2">
-                  <Row label="Flight no." value="—" />
-                  <Row label="Arriving into" value="—" />
-                  <Row label="Flying from" value="—" />
-                  <Row label="Meeting point" value="—" />
+                  <Row label="Flight no." value={booking.flightNumber || "—"} />
+                  <Row
+                    label="Arriving into"
+                    value={booking.flightTerminal || "—"}
+                  />
+                  <Row label="Flying from" value={booking.flightFrom || "—"} />
+                  <Row
+                    label="Meeting point"
+                    value={booking.meetingPoint || "—"}
+                  />
                 </div>
               </div>
             </Panel>
           </div>
 
-          {/* Additional info -------------------------------------- */}
+          {/* Additional info */}
           <div className="mt-6">
             <Panel title="Additional Info" centerTitle>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
                 <Row label="Payment type" value={payment.type} />
                 <Row label="Amount" value={payment.amount} />
-                <Row label="Booked by" value={payment.bookedBy} />
-                <Row label="Booker mobile" value={payment.bookedByMobile} />
-                <Row label="Booker email" value={payment.bookedByEmail} />
-                <Row label="Customer name" value="—" />
-                <Row label="Customer ref" value="—" />
-                <Row label="Cost centre" value="—" />
-                <Row label="Instructions" value="—" fullWidth />
+                <Row label="Booked by" value={booking.bookedBy} />
+                <Row label="Booker mobile" value={booking.bookedByMobile} />
+                <Row label="Booker email" value={booking.bookedByEmail} />
+                <Row label="Customer name" value={booking.customerName} />
+                <Row label="Customer ref" value={booking.customerRef} />
+                <Row label="Cost centre" value={booking.costCentre} />
+                <Row
+                  label="Instructions"
+                  value={booking.notes || "—"}
+                  fullWidth
+                />
               </div>
             </Panel>
           </div>
 
-          {/* Via points (hidden by default) ----------------------- */}
+          {/* Via points (hidden by default) */}
           <ViaPanel id="ViaPanel" title="Via Points" />
           <ViaPanel id="ViaPanelReturn" title="Via Points - Return Journey" />
         </section>
@@ -207,18 +190,8 @@ export default function Step4() {
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Atomic UI helpers                                                  */
-/* ------------------------------------------------------------------ */
-const Panel = ({
-  title,
-  children,
-  centerTitle = false,
-}: {
-  title: string;
-  children: React.ReactNode;
-  centerTitle?: boolean;
-}) => (
+/* ---------- Atomic helpers (unchanged) ---------- */
+const Panel = ({ title, children, centerTitle = false }: any) => (
   <div className="border border-gray-300 rounded">
     <div
       className={`${
@@ -231,26 +204,18 @@ const Panel = ({
   </div>
 );
 
-const Row = ({
-  label,
-  value,
-  fullWidth = false,
-}: {
-  label: string;
-  value: React.ReactNode;
-  fullWidth?: boolean;
-}) => (
+const Row = ({ label, value, fullWidth = false }: any) => (
   <div className={`flex ${fullWidth ? "md:col-span-2" : ""}`}>
     <div className="w-1/3 font-medium text-gray-700">{label}</div>
     <div className="w-2/3 text-gray-900">{value}</div>
   </div>
 );
 
-const SectionLabel = ({ children }: { children: string }) => (
+const SectionLabel = ({ children }: any) => (
   <div className="text-center font-semibold text-gray-700 mb-2">{children}</div>
 );
 
-const ViaPanel = ({ id, title }: { id: string; title: string }) => (
+const ViaPanel = ({ id, title }: any) => (
   <div id={id} className="mt-6 hidden">
     <Panel title={title}>
       <div className="overflow-x-auto">

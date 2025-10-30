@@ -3,9 +3,9 @@
 import { atom } from "jotai";
 
 /* ---------- enums / types ---------- */
-export type Service = "airport" | "cruise" | "hourly";
-export type TripType = "one-way" | "return";
-export type FlightType = "arrival" | "departure";
+export type Service = "airport" | "cruise" | "hourly" | "-";
+export type TripType = "one-way" | "return" | "-";
+export type FlightType = "arrival" | "departure" | "-";
 
 export interface BookingAtom {
   /* journey */
@@ -27,10 +27,14 @@ export interface BookingAtom {
   childSeats: number;
   boosterSeats: number;
   meetGreet: boolean;
+  bookedByMobile: string; //ref booker
+  
   notes: string;
-
+  destination:string;
+  seq: string;
   /* extras (set later or calculated) */
-  vehicleClass: "Business Class" | "Executive" | "MPV"; // example
+  vehicleClass: string;
+  paymentType: string; 
   amount: number; // £475.00 etc
   flightAirport: string;
   flightAirline: string;
@@ -38,18 +42,31 @@ export interface BookingAtom {
   flightFrom: string;
   flightTerminal: string;
   meetingPoint: string;
+  bookedBy : string;
+  bookedByEmail: string;
+  customerName: string;
+  customerRef: string;
+  costCentre:string;
 }
 
 /* ---------- default state ---------- */
 const initialBooking: BookingAtom = {
-  service: "airport",
-  tripType: "one-way",
+  costCentre: "-",
+  customerRef: "-",
+  customerName: "-",
+  bookedBy: "-",
+  bookedByEmail: "-",
+  bookedByMobile: "-",
+  seq: "-",
+  service: "-",
+  tripType: "-",
   pickupAirport: "",
   viaPoints: [],
   flightType: "arrival",
   flightNumber: "",
   pickupDate: "",
   pickupTime: "",
+  destination:"",
 
   name: "",
   email: "",
@@ -61,8 +78,9 @@ const initialBooking: BookingAtom = {
   meetGreet: true,
   notes: "",
 
-  vehicleClass: "Business Class",
-  amount: 475,
+  vehicleClass: "",
+  amount: 0,
+  paymentType: "",
   flightAirport: "",
   flightAirline: "",
   flightTime: "",

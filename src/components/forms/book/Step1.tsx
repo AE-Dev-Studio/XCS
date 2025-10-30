@@ -3,7 +3,6 @@
 import { useAtom } from "jotai";
 import { bookingAtom, updateBookingAtom } from "@/atoms/booking";
 import type { BookingAtom } from "@/atoms/booking";
-import { useRouter } from "next/navigation";
 
 export interface AirportOption {
   label: string;
@@ -273,7 +272,6 @@ export default function Step1() {
     update({ viaPoints: booking.viaPoints.filter((_, i) => i !== idx) });
   const [booking] = useAtom(bookingAtom);
   const [, update] = useAtom(updateBookingAtom);
-  const router = useRouter();
 
   /* keep local state for controlled inputs -------------------- */
   const onChange = <K extends keyof BookingAtom>(key: K, val: BookingAtom[K]) =>
@@ -289,7 +287,7 @@ export default function Step1() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/confirmation");
+    console.log(booking.service, booking.tripType, booking.pickupAirport);
   };
 
   return (
@@ -357,6 +355,20 @@ export default function Step1() {
             </option>
           ))}
         </select>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-black">
+          Destination address <span className="text-red-500">*</span>
+        </label>
+        <input
+          required
+          type="text"
+          placeholder="e.g. 10 Downing St, London"
+          value={booking.destination}
+          onChange={(e) => onChange("destination", e.target.value)}
+          className="mt-1 w-full rounded-md py-2 px-1 bg-white border-black shadow-sm"
+        />
       </div>
 
       {/* Via points */}
