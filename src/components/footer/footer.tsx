@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 import { Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner"
@@ -71,32 +72,50 @@ const Footer: React.FC = () => {
             <h3 className="text-[13px] font-semibold mb-6">Our Fleet</h3>
             <ul className="space-y-3 text-gray-300">
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/fleet/range-rover-vogue"
+                  className="hover:text-[#a89447] transition"
+                >
                   Range Rover Vogue
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/fleet/mercedes-v-class"
+                  className="hover:text-[#a89447] transition"
+                >
                   Mercedes V-Class
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/fleet/mercedes-e-class"
+                  className="hover:text-[#a89447] transition"
+                >
                   Mercedes E-Class
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/fleet/mercedes-s-class"
+                  className="hover:text-[#a89447] transition"
+                >
                   Mercedes S-Class
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/fleet/rolls-royce-ghost"
+                  className="hover:text-[#a89447] transition"
+                >
                   Rolls Royce Ghost
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/fleet/rolls-royce-phantom"
+                  className="hover:text-[#a89447] transition"
+                >
                   Rolls Royce Phantom
                 </a>
               </li>
@@ -108,34 +127,52 @@ const Footer: React.FC = () => {
             <h3 className="text-[13px] font-semibold mb-6">Services</h3>
             <ul className="space-y-3 text-gray-300">
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/services/airport-chauffeur-manchester"
+                  className="hover:text-[#a89447] transition"
+                >
                   Airport Chauffeur Manchester
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/services/corporate-services"
+                  className="hover:text-[#a89447] transition"
+                >
                   Corporate Services
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/services/event-services"
+                  className="hover:text-[#a89447] transition"
+                >
                   Event Services
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/services/close-protection"
+                  className="hover:text-[#a89447] transition"
+                >
                   Close Protection
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/services/wedding-service"
+                  className="hover:text-[#a89447] transition"
+                >
                   Wedding Service
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <Link
+                  href="/services/luxury-car-rent"
+                  className="hover:text-[#a89447] transition"
+                >
                   Luxury Car Rent
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -150,27 +187,30 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a href="/about-us" className="hover:text-[#a89447] transition">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a href="/services" className="hover:text-[#a89447] transition">
                   Our Service
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a href="/fleet" className="hover:text-[#a89447] transition">
                   Fleet
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a href="/gallery" className="hover:text-[#a89447] transition">
                   Gallery
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#a89447] transition">
+                <a
+                  href="/contact-us"
+                  className="hover:text-[#a89447] transition"
+                >
                   Contact Us
                 </a>
               </li>

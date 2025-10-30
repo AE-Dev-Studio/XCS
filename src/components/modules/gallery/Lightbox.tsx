@@ -95,7 +95,7 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
 
             {showShare && (
               <div className="absolute z-20 right-0 top-12 bg-white text-black rounded-lg shadow-lg p-3 flex flex-col gap-2 text-sm">
-                {/* Facebook */}
+                {/* Facebook 
                 <a
                   href={fbShare}
                   target="_blank"
@@ -109,7 +109,7 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
                   Share it
                 </a>
 
-                {/* Twitter */}
+                 Twitter 
                 <a
                   href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
                     shareUrl
@@ -125,7 +125,7 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
                   Tweet it
                 </a>
 
-                {/* Pinterest */}
+                Pinterest 
                 <a
                   href={pinShare}
                   target="_blank"
@@ -137,7 +137,7 @@ export default function Lightbox({ images, startIndex, onClose }: Props) {
                     <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.222.083.343-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
                   </svg>
                   Pin it
-                </a>
+                </a> */}
 
                 {/* Download current image */}
                 <a
