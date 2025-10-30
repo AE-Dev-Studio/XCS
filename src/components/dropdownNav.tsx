@@ -36,7 +36,7 @@ export default function Dropdown({
     <Menu as="div" className="relative">
       <Menu.Button
         as={isDesktop ? Link : "button"}
-        href={isDesktop ? items[0]?.href.replace(/\/[^/]+$/, "") : undefined}
+        {...(isDesktop && { href: items[0]?.href.replace(/\/[^/]+$/, "") })}
         className="flex items-center gap-1 outline-none text-white hover:text-[#a89447]"
         onClick={handleClick}
         onMouseEnter={() => isDesktop && setOpen(true)}
