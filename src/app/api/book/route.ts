@@ -28,7 +28,7 @@ export async function GET(req: Request) {
   const limit = Math.min(100, parseInt(url.searchParams.get("limit") || "20"));
   const skip = (page - 1) * limit;
 
-  const q: unknown = {};
+  const q: any = {};
   if (url.searchParams.get("pickupDate")) q.pickupDate = url.searchParams.get("pickupDate");
 
   const [bookings, count] = await Promise.all([
