@@ -35,7 +35,7 @@ export interface BookingAtom {
   /* extras (set later or calculated) */
   vehicleClass: string;
   paymentType: string; 
-  amount: number; // £475.00 etc
+  amount: string; // £475.00 etc
   flightAirport: string;
   flightAirline: string;
   flightTime: string;
@@ -79,7 +79,7 @@ const initialBooking: BookingAtom = {
   notes: "",
 
   vehicleClass: "",
-  amount: 0,
+  amount: "0",
   paymentType: "",
   flightAirport: "",
   flightAirline: "",

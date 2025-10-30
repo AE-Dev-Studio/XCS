@@ -193,7 +193,7 @@ export default function Step3() {
               type="email"
               icon={<Mail className="h-4 w-4" />}
               placeholder="ex: myname@example.com"
-              value={booking.bookedByEmail || booking.email}
+              value={booking.bookedByEmail}
               onChange={(e) => set("bookedByEmail", e.target.value)}
             />
           </Row>
@@ -306,21 +306,21 @@ export default function Step3() {
         <>
           <Row label="Customer name">
             <InputGroup
-              value={booking.customerName || ""}
+              value={booking.customerName}
               onChange={(e) => set("customerName", e.target.value)}
             />
           </Row>
 
           <Row label="Customer ref">
             <InputGroup
-              value={booking.customerRef || ""}
+              value={booking.customerRef}
               onChange={(e) => set("customerRef", e.target.value)}
             />
           </Row>
 
           <Row label="Cost centre">
             <InputGroup
-              value={booking.costCentre || ""}
+              value={booking.costCentre}
               onChange={(e) => set("costCentre", e.target.value)}
             />
           </Row>

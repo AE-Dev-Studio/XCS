@@ -1,7 +1,8 @@
 "use client";
 
 import { useAtom, useAtomValue } from "jotai";
-import { bookingAtom, updateBookingAtom } from "@/atoms/booking"; // adjust path
+import { bookingAtom, updateBookingAtom } from "@/atoms/booking";
+import type { Service } from "@/atoms/booking"; // ✅ import the union
 
 type Vehicle = {
   id: string;
@@ -56,7 +57,6 @@ export default function Step2() {
   const booking = useAtomValue(bookingAtom);
   const [, update] = useAtom(updateBookingAtom);
 
-  /* helper to keep code short */
   const onChange = <K extends keyof typeof booking>(
     key: K,
     val: (typeof booking)[K]
@@ -77,8 +77,8 @@ export default function Step2() {
                   type="radio"
                   name="requestType"
                   value={t}
-                  checked={booking.seq === t}
-                  onChange={() => onChange("service", t)}
+                  checked={booking.service === t} // ✅ compare to atom
+                  onChange={() => onChange("service", t as Service)}
                   className="h-4 w-4 appearance-none rounded-full border-2 border-[#a89447] checked:bg-[#a89447] checked:scale-75 transition-transform focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
                 />
                 <span className="capitalize">{t}</span>
@@ -135,10 +135,14 @@ export default function Step2() {
               name="vehicle"
               value={v.id}
               checked={booking.vehicleClass === v.name}
-              onChange={() => onChange("vehicleClass", v.name)}
+              onChange={() => {
+                onChange("vehicleClass", v.name);
+                onChange("amount", v.price); // ← updates immediately when card is focused
+              }}
               className="absolute inset-0 w-full h-full opacity-0"
             />
 
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={v.image}
               alt={v.name}
@@ -159,7 +163,6 @@ export default function Step2() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => onChange("vehicleClass", v.name)}
                   className="rounded-md bg-[#a89447] px-4 py-2 text-sm text-white hover:bg-[#a89447]/90"
                 >
                   Proceed
