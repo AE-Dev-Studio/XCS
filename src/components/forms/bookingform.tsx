@@ -132,7 +132,6 @@ export default function BookingForm() {
   //   }
   // };
 
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -210,8 +209,9 @@ export default function BookingForm() {
                 placeholder="Name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className={`${errors.name ? "border-red-500 focus-visible:ring-red-500" : ""
-                  }`}
+                className={`${
+                  errors.name ? "border-red-500 focus-visible:ring-red-500" : ""
+                }`}
                 aria-invalid={!!errors.name}
                 aria-describedby={errors.name ? "name-error" : undefined}
               />
@@ -234,10 +234,11 @@ export default function BookingForm() {
                 placeholder="Phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className={`${errors.phone
+                className={`${
+                  errors.phone
                     ? "border-red-500 focus-visible:ring-red-500"
                     : ""
-                  }`}
+                }`}
                 aria-invalid={!!errors.phone}
                 aria-describedby={errors.phone ? "phone-error" : undefined}
               />
@@ -262,10 +263,11 @@ export default function BookingForm() {
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`${errors.email
+                className={`${
+                  errors.email
                     ? "border-red-500 focus-visible:ring-red-500"
                     : ""
-                  }`}
+                }`}
                 aria-invalid={!!errors.email}
                 aria-describedby={errors.email ? "email-error" : undefined}
               />
@@ -284,10 +286,11 @@ export default function BookingForm() {
               >
                 <SelectTrigger
                   id="vehicle"
-                  className={`${errors.vehicle
+                  className={`${
+                    errors.vehicle
                       ? "border-red-500 focus-visible:ring-red-500"
                       : ""
-                    }`}
+                  }`}
                   aria-invalid={!!errors.vehicle}
                   aria-describedby={
                     errors.vehicle ? "vehicle-error" : undefined
@@ -336,8 +339,9 @@ export default function BookingForm() {
               type="date"
               value={formData.date}
               onChange={handleInputChange}
-              className={`${errors.date ? "border-red-500 focus-visible:ring-red-500" : ""
-                }`}
+              className={`${
+                errors.date ? "border-red-500 focus-visible:ring-red-500" : ""
+              }`}
               aria-invalid={!!errors.date}
               aria-describedby={errors.date ? "date-error" : undefined}
             />
@@ -361,10 +365,11 @@ export default function BookingForm() {
                 placeholder="Pick-up"
                 value={formData.pickUp}
                 onChange={handleInputChange}
-                className={`${errors.pickUp
+                className={`${
+                  errors.pickUp
                     ? "border-red-500 focus-visible:ring-red-500"
                     : ""
-                  }`}
+                }`}
                 aria-invalid={!!errors.pickUp}
                 aria-describedby={errors.pickUp ? "pickUp-error" : undefined}
               />
@@ -409,9 +414,10 @@ export default function BookingForm() {
           {/* Submit Button */}
           <Button
             type="submit"
-            className="w-full pb-4 bg-[#a89447] text-white hover:none hover:bg-[#a89447] rounded-none font-semibold py-6 text-base transition-colors duration-200"
+            disabled={submitted}
+            className="w-full pb-4 bg-[#a89447] cursor-pointer text-white hover:none hover:bg-[#a89447] rounded-none font-semibold py-6 text-base transition-colors duration-200"
           >
-            Send
+            {submitted ? "Sending…" : "Send"}
           </Button>
         </form>
       )}

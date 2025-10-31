@@ -93,4 +93,5 @@ RealBookingSchema.index({ pickupDate: 1 });
 RealBookingSchema.index({ email: 1 });
 RealBookingSchema.index({ phone: 1 });
 
-export default mongoose.models.RealBooking || mongoose.model<BookingDoc>("RealBooking", RealBookingSchema, "realBoookings");
+export default mongoose.models.RealBooking ||
+  mongoose.model<BookingDoc>("RealBooking", RealBookingSchema, "realBookings");

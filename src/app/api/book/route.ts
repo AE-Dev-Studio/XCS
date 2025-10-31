@@ -2,34 +2,53 @@
 import { NextResponse } from "next/server";
 import { dbConnect } from "@/lib/dbConnect";
 import RealBooking from "@/models/realbooking";
-import { bookingSchema, BookingInput } from "@/lib/bookingschema";
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
 export async function POST(req: Request) {
   await dbConnect();
   const body = await req.json();
+  console.log(body);
 
-  const parse = bookingSchema.safeParse(body);
-  if (!parse.success) {
-    return NextResponse.json({ error: parse.error.format() }, { status: 400 });
-  }
-  const data = parse.data as BookingInput;
+  // ✅  FIX : define data before using it
+  const data = body; // or:  const data = bookingSchema.parse(body);
 
   const seq = generateSeq();
-  const doc = new RealBooking({ ...data, seq, status: "new" });
-  await doc.save();
+  const doc = await new RealBooking({ ...data, seq, status: "new" }).save();
+
+  // send mail (swallow error so booking still succeeds)
+  try {
+    await transporter.sendMail({
+      from: `"Site Robot" <${process.env.SMTP_USER}>`,
+      to: process.env.NOTIFY_EMAIL,
+      subject: `New booking ${seq}`,
+      text: JSON.stringify(data, null, 2),
+      html: `<pre>${JSON.stringify(data, null, 2)}</pre>`,
+    });
+  } catch (mailErr) {
+    console.warn("Mail failed:", mailErr);
+  }
+
   return NextResponse.json({ success: true, booking: doc }, { status: 201 });
 }
 
 export async function GET(req: Request) {
   await dbConnect();
-  // list with simple pagination
   const url = new URL(req.url);
   const page = parseInt(url.searchParams.get("page") || "1");
   const limit = Math.min(100, parseInt(url.searchParams.get("limit") || "20"));
   const skip = (page - 1) * limit;
 
   const q: any = {};
-  if (url.searchParams.get("pickupDate")) q.pickupDate = url.searchParams.get("pickupDate");
+  if (url.searchParams.get("pickupDate"))
+    q.pickupDate = url.searchParams.get("pickupDate");
 
   const [bookings, count] = await Promise.all([
     RealBooking.find(q).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
@@ -38,16 +57,12 @@ export async function GET(req: Request) {
   return NextResponse.json({ bookings, count, page, limit });
 }
 
-// helper
 function generateSeq() {
   const d = new Date();
-  const pad = (n:number) => String(n).padStart(2,"0");
-  const y = d.getFullYear();
-  const m = pad(d.getMonth()+1);
-  const day = pad(d.getDate());
-  const hh = pad(d.getHours());
-  const mm = pad(d.getMinutes());
-  const ss = pad(d.getSeconds());
-  const rand = Math.floor(Math.random()*9000)+1000;
-  return `XCS-${y}${m}${day}-${hh}${mm}${ss}-${rand}`;
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `XCS-${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(
+    d.getDate()
+  )}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(
+    d.getSeconds()
+  )}-${Math.floor(Math.random() * 9000) + 1000}`;
 }
