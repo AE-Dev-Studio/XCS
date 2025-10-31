@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,7 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Image from "next/image";
 
 interface FormData {
   name: string;
@@ -44,6 +42,7 @@ export default function MessageForm() {
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false); // ✅ added loading state
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -109,68 +108,49 @@ export default function MessageForm() {
     }
   };
 
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   if (validateForm()) {
-  //     console.log("Form submitted:", JSON.stringify(formData, null, 2));
-  //     setSubmitted(true);
-  //     // Reset form after 3 seconds
-  //     setTimeout(() => {
-  //       setFormData({
-  //         name: "",
-  //         phone: "",
-  //         email: "",
-  //         vehicle: "",
-  //         date: "",
-  //         pickUp: "",
-  //         destination: "",
-  //         otherInfo: "",
-  //       });
-  //       setSubmitted(false);
-  //     }, 3000);
-  //   }
-  // };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return; // ✅ prevent multiple submissions
+    if (!validateForm()) return;
 
-    if (validateForm()) {
-      try {
-        const res = await fetch("/api/bookings", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) throw new Error("Failed to send booking");
+
+      const result = await res.json();
+      console.log("✅ Booking saved:", result);
+
+      setSubmitted(true);
+      setTimeout(() => {
+        setFormData({
+          name: "",
+          phone: "",
+          email: "",
+          vehicle: "",
+          date: "",
+          pickUp: "",
+          destination: "",
+          otherInfo: "",
         });
-
-        if (!res.ok) throw new Error("Failed to send booking");
-
-        const result = await res.json();
-        console.log("✅ Booking saved:", result);
-
-        setSubmitted(true);
-        setTimeout(() => {
-          setFormData({
-            name: "",
-            phone: "",
-            email: "",
-            vehicle: "",
-            date: "",
-            pickUp: "",
-            destination: "",
-            otherInfo: "",
-          });
-          setSubmitted(false);
-        }, 3000);
-      } catch (error) {
-        console.error(error);
-        alert("Something went wrong. Please try again.");
-      }
+        setSubmitted(false);
+      }, 3000);
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false); // ✅ reset loading
     }
   };
 
   return (
-    <div className="rounded-sm bg-white backdrop-blur-sm pb-7 px-8  shadow-2xl">
+    <div className="rounded-sm bg-white backdrop-blur-sm pb-7 px-8 shadow-2xl">
       {submitted ? (
         <div className="space-y-4 text-center py-8">
           <div className="text-4xl">✓</div>
@@ -184,7 +164,7 @@ export default function MessageForm() {
       ) : (
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="flex flex-row justify-center gap-2">
-            <p className="text-3xl  font-extrabold font-sans text-black mt-5 uppercase tracking-wide  text-center ">
+            <p className="text-3xl font-extrabold font-sans text-black mt-5 uppercase tracking-wide text-center">
               Send us a Message
             </p>
           </div>
@@ -192,9 +172,6 @@ export default function MessageForm() {
           {/* Name */}
           <div className="flex flex-row gap-2">
             <div className="space-y-1 w-full">
-              {/* <Label htmlFor="name" className="text-sm font-medium text-gray-900">
-              Name <span className="text-red-500">*</span>
-            </Label> */}
               <Input
                 id="name"
                 name="name"
@@ -202,10 +179,10 @@ export default function MessageForm() {
                 placeholder="Name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className={`${errors.name ? "border-red-500 focus-visible:ring-red-500" : ""
-                  }`}
-                aria-invalid={!!errors.name}
-                aria-describedby={errors.name ? "name-error" : undefined}
+                disabled={loading} // ✅ disable while loading
+                className={`${
+                  errors.name ? "border-red-500 focus-visible:ring-red-500" : ""
+                }`}
               />
               {errors.name && (
                 <p id="name-error" className="text-xs text-red-500">
@@ -216,9 +193,6 @@ export default function MessageForm() {
 
             {/* Phone */}
             <div className="space-y-2 w-full">
-              {/* <Label htmlFor="phone" className="text-sm font-medium text-gray-900">
-              Phone <span className="text-red-500">*</span>
-            </Label> */}
               <Input
                 id="phone"
                 name="phone"
@@ -226,12 +200,12 @@ export default function MessageForm() {
                 placeholder="Phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className={`${errors.phone
+                disabled={loading}
+                className={`${
+                  errors.phone
                     ? "border-red-500 focus-visible:ring-red-500"
                     : ""
-                  }`}
-                aria-invalid={!!errors.phone}
-                aria-describedby={errors.phone ? "phone-error" : undefined}
+                }`}
               />
               {errors.phone && (
                 <p id="phone-error" className="text-xs text-red-500">
@@ -241,12 +215,9 @@ export default function MessageForm() {
             </div>
           </div>
 
-          {/* Email */}
+          {/* Email + Vehicle */}
           <div className="flex flex-row gap-2">
             <div className="space-y-1 w-full">
-              {/* <Label htmlFor="email" className="text-sm font-medium text-gray-900">
-              Email <span className="text-red-500">*</span>
-            </Label> */}
               <Input
                 id="email"
                 name="email"
@@ -254,12 +225,12 @@ export default function MessageForm() {
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`${errors.email
+                disabled={loading}
+                className={`${
+                  errors.email
                     ? "border-red-500 focus-visible:ring-red-500"
                     : ""
-                  }`}
-                aria-invalid={!!errors.email}
-                aria-describedby={errors.email ? "email-error" : undefined}
+                }`}
               />
               {errors.email && (
                 <p id="email-error" className="text-xs text-red-500">
@@ -268,22 +239,19 @@ export default function MessageForm() {
               )}
             </div>
 
-            {/* Vehicle Select */}
             <div className="space-y-2 w-full">
               <Select
                 value={formData.vehicle}
                 onValueChange={handleSelectChange}
+                disabled={loading}
               >
                 <SelectTrigger
                   id="vehicle"
-                  className={`${errors.vehicle
+                  className={`${
+                    errors.vehicle
                       ? "border-red-500 focus-visible:ring-red-500"
                       : ""
-                    }`}
-                  aria-invalid={!!errors.vehicle}
-                  aria-describedby={
-                    errors.vehicle ? "vehicle-error" : undefined
-                  }
+                  }`}
                 >
                   <SelectValue placeholder="Select a vehicle" />
                 </SelectTrigger>
@@ -319,19 +287,16 @@ export default function MessageForm() {
 
           {/* Date */}
           <div className="space-y-2 w-full">
-            {/* <Label htmlFor="date" className="text-sm font-medium text-gray-900">
-              Date <span className="text-red-500">*</span>
-            </Label> */}
             <Input
               id="date"
               name="date"
               type="date"
               value={formData.date}
               onChange={handleInputChange}
-              className={`${errors.date ? "border-red-500 focus-visible:ring-red-500" : ""
-                }`}
-              aria-invalid={!!errors.date}
-              aria-describedby={errors.date ? "date-error" : undefined}
+              disabled={loading}
+              className={`${
+                errors.date ? "border-red-500 focus-visible:ring-red-500" : ""
+              }`}
             />
             {errors.date && (
               <p id="date-error" className="text-xs text-red-500">
@@ -340,12 +305,9 @@ export default function MessageForm() {
             )}
           </div>
 
-          {/* Pick Up */}
+          {/* Pick Up + Destination */}
           <div className="flex flex-row gap-2">
             <div className="space-y-2 w-full">
-              {/* <Label htmlFor="pickUp" className="text-sm font-medium text-gray-900">
-              Pick Up <span className="text-red-500">*</span>
-            </Label> */}
               <Input
                 id="pickUp"
                 name="pickUp"
@@ -353,12 +315,12 @@ export default function MessageForm() {
                 placeholder="Pick-up"
                 value={formData.pickUp}
                 onChange={handleInputChange}
-                className={`${errors.pickUp
+                disabled={loading}
+                className={`${
+                  errors.pickUp
                     ? "border-red-500 focus-visible:ring-red-500"
                     : ""
-                  }`}
-                aria-invalid={!!errors.pickUp}
-                aria-describedby={errors.pickUp ? "pickUp-error" : undefined}
+                }`}
               />
               {errors.pickUp && (
                 <p id="pickUp-error" className="text-xs text-red-500">
@@ -367,11 +329,7 @@ export default function MessageForm() {
               )}
             </div>
 
-            {/* Destination */}
             <div className="space-y-2 w-full">
-              {/* <Label htmlFor="destination" className="text-sm font-medium text-gray-900">
-              Destination
-            </Label> */}
               <Input
                 id="destination"
                 name="destination"
@@ -379,20 +337,20 @@ export default function MessageForm() {
                 placeholder="Destination"
                 value={formData.destination}
                 onChange={handleInputChange}
+                disabled={loading}
               />
             </div>
           </div>
-          {/* Other Information */}
+
+          {/* Other Info */}
           <div className="space-y-2 w-full">
-            {/* <Label htmlFor="otherInfo" className="text-sm font-medium text-gray-900">
-              Other Information
-            </Label> */}
             <Textarea
               id="otherInfo"
               name="otherInfo"
               placeholder="Any additional details (optional)"
               value={formData.otherInfo}
               onChange={handleInputChange}
+              disabled={loading}
               className="resize-none"
               rows={3}
             />
@@ -401,9 +359,12 @@ export default function MessageForm() {
           {/* Submit Button */}
           <Button
             type="submit"
-            className="w-full pb-4 bg-[#a89447] text-white hover:none hover:bg-[#a89447] rounded-none font-semibold py-6 text-base transition-colors duration-200"
+            disabled={loading}
+            className={`w-full pb-4 bg-[#a89447] text-white cursor-pointer rounded-none font-semibold py-6 text-base transition-colors duration-200 ${
+              loading ? "opacity-70 cursor-not-allowed" : "hover:bg-[#a89447]"
+            }`}
           >
-            Send
+            {loading ? "Sending..." : "Send"}
           </Button>
         </form>
       )}

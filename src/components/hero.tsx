@@ -12,10 +12,6 @@ export default function HeroSection() {
     setIsVisible(true);
   }, []);
 
-  const handleBookNow = () => {
-    formRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <div className="relative min-h-screen w-full overflow-hidden pt-20 lg:pt-10">
       {/* Background Image with Overlay */}
