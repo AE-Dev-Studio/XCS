@@ -11,7 +11,7 @@ const Callnowcard = () => {
       <div className="flex flex-col">
         <h2 className="text-[#a89447] text-xl sm:text-2xl font-semibold">Contact Us</h2>
         <Link href="tel:07497363737" className="text-muted-foreground hover:text-[#a89447] transition">
-          074 9736 3737
+          078 0355 3793
         </Link>
       </div>
     </div>
