@@ -4,10 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && pnpm seed",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "seed": "node scripts/seedBlogs.cjs"
+  },
+  "packageManager": "pnpm@10.18.3",
+  "engines": {
+    "node": ">=20.9.0"
   },
   "dependencies": {
     "@fontsource/plus-jakarta-sans": "^5.2.8",
